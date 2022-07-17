@@ -1,4 +1,5 @@
 import NoteViewerBlank from '@/components/NoteViewerBlank';
+import NoteViewerEditor from '@/components/NoteViewerEditor';
 import NoteViewerHead from '@/components/NoteViewerHead';
 import { atomNotesSelected } from '@/stores/notesStore';
 import { useAtomValue } from 'jotai';
@@ -12,7 +13,7 @@ const NoteViewer = () => {
         <>
           <NoteViewerHead />
 
-          <div></div>
+          <NoteViewerEditor />
         </>
       ) : (
         <NoteViewerBlank />
