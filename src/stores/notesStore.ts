@@ -10,12 +10,12 @@ export const atomNotesSelected = atom<Note | null>(null);
 
 export const atomNotesSelectedWrite = atom(
   null,
-  (get, set, updated: BaseNote | null) => {
+  (get, set, updated: Partial<BaseNote> | null) => {
     const selectedNote = get(atomNotesSelected);
 
     if (selectedNote && updated) {
       const updateNote = {
-        id: selectedNote.id,
+        ...selectedNote,
         ...updated,
         updatedAt: new Date().toISOString(),
       };
