@@ -7,6 +7,7 @@ export const atomNotes = atomWithStorage<Note[]>('notes', []);
 export const atomNotesSelected = atom<Note | null>(null);
 
 // Actions
+
 export const atomNotesSelectedWrite = atom(
   null,
   (get, set, updated: BaseNote | null) => {
@@ -29,6 +30,17 @@ export const atomNotesSelectedWrite = atom(
     }
   },
 );
+
+export const atomNotesDeleteSelected = atom(null, (get, set) => {
+  const selectedNote = get(atomNotesSelected);
+  if (selectedNote) {
+    set(
+      atomNotes,
+      get(atomNotes).filter((note) => note.id !== selectedNote.id),
+    );
+    set(atomNotesSelected, get(atomNotes)[0] ?? null);
+  }
+});
 
 export const atomNotesAdd = atom(null, (get, set) => {
   const notes = get(atomNotes);
