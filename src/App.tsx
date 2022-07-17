@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from '@/pages/Home';
+import NoteApp from '@/pages/NoteApp';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<NoteApp />} />
     </Routes>
   );
 }
