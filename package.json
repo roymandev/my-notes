@@ -1,7 +1,6 @@
 {
-  "name": "template-react",
+  "name": "my-notes",
   "version": "0.0.0",
-  "description": "My template to make react project",
   "license": "MIT",
   "type": "module",
   "scripts": {
