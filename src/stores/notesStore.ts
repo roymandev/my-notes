@@ -50,5 +50,6 @@ export const atomNotesAdd = atom(null, (get, set) => {
     body: '',
     updatedAt: new Date().toISOString(),
   };
-  set(atomNotes, [...notes, newNote]);
+  set(atomNotes, [newNote, ...notes]);
+  set(atomNotesSelected, newNote);
 });
