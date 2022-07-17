@@ -3,7 +3,7 @@ import SidebarHeader from '@/components/SidebarHeader';
 
 const TheSidebar = () => {
   return (
-    <aside className="w-[320px] border-r border-slate-700">
+    <aside className="flex w-[320px] flex-col divide-y divide-slate-700">
       <SidebarHeader />
 
       <NoteList />

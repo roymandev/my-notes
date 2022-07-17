@@ -7,7 +7,7 @@ const SidebarHeader = () => {
   const addNewNote = useSetAtom(atomNotesAdd);
 
   return (
-    <header className="flex items-center border-b border-slate-700 p-1">
+    <header className="flex items-center p-1">
       <h1 className="px-2 py-1 text-xl font-bold">My Notes</h1>
 
       <BaseButton className="ml-auto p-2" onClick={addNewNote}>
