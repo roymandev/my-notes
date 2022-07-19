@@ -11,7 +11,7 @@ const TheSidebar = () => {
   return (
     <aside
       className={twMerge(
-        'fixed w-full inset-0 flex-col divide-y z-10 divide-slate-700 bg-slate-800 sm:relative sm:w-[400px]',
+        'fixed w-full inset-0 flex-col divide-y z-10 divide-slate-700 bg-slate-800 flex sm:relative sm:w-[400px]',
         selectedItem && window.outerWidth < 640 && '-left-[100vw]',
       )}
     >
