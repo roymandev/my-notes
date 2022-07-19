@@ -10,10 +10,12 @@ const NoteViewerEditor = () => {
     <div className="flex flex-1 flex-col">
       <AutoResizeTextarea
         parentClass="text-2xl min-h-[100px]"
-        className="bg-transparent p-10 pb-5 outline-none transition-colors placeholder:text-slate-500"
+        className="whitespace-pre-wrap break-all bg-transparent p-10 pb-5 outline-none transition-colors placeholder:text-slate-500"
         placeholder="Title"
         value={selectedNote?.title}
-        onChange={(e) => writeSelectedNote({ title: e.target.value })}
+        onChange={(e) =>
+          writeSelectedNote({ title: e.target.value.replaceAll('\n', '') })
+        }
       />
 
       <hr className="mx-10 border-slate-700" />
