@@ -1,28 +1,19 @@
 import BaseButton from '@/components/BaseButton';
+import useAuth from '@/hooks/useAuth';
 import { useState } from 'react';
 import { RiGoogleFill } from 'react-icons/ri';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const { logIn } = useAuth();
   const [authing, setAuthing] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const signInWithGoogle = async () => {
+  const loginHandler = () => {
     setAuthing(true);
-    setErrorMsg('');
-
-    signInWithPopup(auth, new GoogleAuthProvider())
-      .then((response) => {
-        console.log(response.user.uid);
-        navigate('/');
-      })
-      .catch((error) => {
-        setErrorMsg((error as Error).message);
-        setAuthing(false);
-      });
+    logIn().catch((error) => {
+      setErrorMsg((error as Error).message);
+      setAuthing(false);
+    });
   };
 
   return (
@@ -46,7 +37,7 @@ const Login = () => {
               variant="primary"
               className="p-2 text-lg"
               disabled={authing}
-              onClick={signInWithGoogle}
+              onClick={loginHandler}
             >
               Login with Google
             </BaseButton>
