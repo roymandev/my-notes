@@ -1,9 +1,9 @@
 import NoteListItem from '@/components/NoteListItem';
-import { atomNotes, atomNotesSelected } from '@/stores/notesStore';
+import { atomNotesFiltered, atomNotesSelected } from '@/stores/notesStore';
 import { useAtomValue } from 'jotai';
 
 const NoteList = () => {
-  const notes = useAtomValue(atomNotes);
+  const notes = useAtomValue(atomNotesFiltered);
   const selectedNotes = useAtomValue(atomNotesSelected);
 
   return (
