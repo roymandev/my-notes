@@ -18,7 +18,7 @@ const NoteListItem = ({ note, isSelected }: NoteListItemProps) => {
     <li>
       <BaseButton
         className={twMerge(
-          'w-full px-3 py-2 text-left break-all',
+          'w-full px-4 py-2 text-left break-all',
           isSelected && 'bg-slate-700 text-slate-300',
         )}
         onClick={selectNoteHandler}

@@ -8,7 +8,7 @@ const BaseInput = ({
   return (
     <input
       className={twMerge(
-        'h-9 rounded border border-slate-700 bg-slate-900/40 py-1 px-2 outline-none focus:border-slate-500',
+        'h-11 rounded border border-slate-700 bg-slate-900/40 py-2 px-4 outline-none focus:border-slate-500',
         className,
       )}
       {...rest}

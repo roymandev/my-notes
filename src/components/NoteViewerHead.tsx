@@ -13,24 +13,24 @@ const NoteViewerHead = () => {
   const setSelectedNote = useSetAtom(atomNotesSelected);
 
   return (
-    <header className="flex items-center p-1">
+    <header className="flex items-center p-2">
       <BaseButton
         className="p-2 sm:hidden"
         onClick={() => setSelectedNote(null)}
       >
-        <RiArrowLeftSLine className="h-5 w-5" />
+        <RiArrowLeftSLine className="h-8 w-8" />
       </BaseButton>
 
-      <p className="flex-1 px-2 text-center sm:text-left">
+      <p className="flex-1 px-4 text-center sm:text-left">
         <span className="text-slate-400">Updated at:</span>{' '}
         {selectedNote && formatDate(selectedNote.updatedAt)}
       </p>
 
       <BaseButton
-        className="ml-auto p-2 text-rose-500/70 hover:text-rose-500"
+        className="ml-auto p-3 text-rose-500/70 hover:text-rose-500"
         onClick={deleteSelectedNoteHanlder}
       >
-        <RiDeleteBin2Line className="h-5 w-5" />
+        <RiDeleteBin2Line className="h-6 w-6" />
       </BaseButton>
     </header>
   );

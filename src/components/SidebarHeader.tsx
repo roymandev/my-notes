@@ -7,11 +7,11 @@ const SidebarHeader = () => {
   const addNewNote = useSetAtom(atomNotesAdd);
 
   return (
-    <header className="flex items-center p-1">
-      <h1 className="px-2 py-1 text-xl font-bold">My Notes</h1>
+    <header className="flex items-center p-2">
+      <h1 className="px-4 py-2 text-2xl font-bold">My Notes</h1>
 
       <BaseButton className="ml-auto p-2" onClick={addNewNote}>
-        <RiAddFill className="h-5 w-5" />
+        <RiAddFill className="h-8 w-8" />
       </BaseButton>
     </header>
   );
