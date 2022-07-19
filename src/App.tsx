@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import NoteApp from '@/pages/NoteApp';
 import Login from '@/pages/Login';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../firebase.config';
 import AuthRoute from '@/components/AuthRoute';
 
-initializeApp(firebaseConfig);
+import '@/services/firebase';
 
 function App() {
   return (
