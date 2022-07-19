@@ -3,7 +3,7 @@ import BaseInput from '@/components/BaseInput';
 
 const Login = () => {
   return (
-    <main className="fixed inset-0 bg-slate-900 py-20 px-4 text-slate-300">
+    <main className="fixed inset-0 overflow-y-auto bg-slate-900 py-20 px-4 text-slate-300">
       <h1 className="px-4 py-10 text-center text-6xl font-bold">My Notes</h1>
       <section className="mx-auto max-w-md rounded bg-slate-800 p-4 shadow">
         <h2 className="p-4 text-center text-2xl font-medium">Login</h2>
