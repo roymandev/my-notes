@@ -5,9 +5,17 @@ import { atomWithStorage } from 'jotai/utils';
 // State
 export const atomNotes = atomWithStorage<Note[]>('notes', []);
 export const atomNotesSelected = atom<Note | null>(null);
+export const atomNotesSearch = atom('');
 
 // Actions
-
+export const atomNotesFiltered = atom((get) => {
+  const notes = get(atomNotes);
+  const search = get(atomNotesSearch).toLocaleLowerCase();
+  if (search.length < 1) return notes;
+  return notes.filter((note) =>
+    note.title.toLocaleLowerCase().includes(search),
+  );
+});
 export const atomNotesSelectedWrite = atom(
   null,
   (get, set, updated: Partial<BaseNote> | null) => {
@@ -38,7 +46,7 @@ export const atomNotesDeleteSelected = atom(null, (get, set) => {
       atomNotes,
       get(atomNotes).filter((note) => note.id !== selectedNote.id),
     );
-    set(atomNotesSelected, get(atomNotes)[0] ?? null);
+    set(atomNotesSelected, null);
   }
 });
 
