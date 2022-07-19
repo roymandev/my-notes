@@ -4,16 +4,24 @@ import {
   atomNotesSelected,
 } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiArrowLeftSLine, RiDeleteBin2Line } from 'react-icons/ri';
 import { formatDate } from '@/utils/formatDate';
 
 const NoteViewerHead = () => {
   const selectedNote = useAtomValue(atomNotesSelected);
   const deleteSelectedNoteHanlder = useSetAtom(atomNotesDeleteSelected);
+  const setSelectedNote = useSetAtom(atomNotesSelected);
 
   return (
     <header className="flex items-center p-1">
-      <p className="px-2">
+      <BaseButton
+        className="p-2 sm:hidden"
+        onClick={() => setSelectedNote(null)}
+      >
+        <RiArrowLeftSLine className="h-5 w-5" />
+      </BaseButton>
+
+      <p className="flex-1 px-2 text-center sm:text-left">
         <span className="text-slate-400">Updated at:</span>{' '}
         {selectedNote && formatDate(selectedNote.updatedAt)}
       </p>
