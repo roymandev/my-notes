@@ -8,6 +8,7 @@ import {
   doc,
   getDocs,
   query,
+  setDoc,
   where,
 } from 'firebase/firestore';
 
@@ -45,7 +46,11 @@ const useDatabase = () => {
     await deleteDoc(doc(db, 'notes', noteId));
   };
 
-  return { fetchUserNotes, addNote, deleteNote };
+  const editNote = async (noteId: string, update: Note) => {
+    await setDoc(doc(db, 'notes', noteId), update);
+  };
+
+  return { fetchUserNotes, addNote, deleteNote, editNote };
 };
 
 export default useDatabase;

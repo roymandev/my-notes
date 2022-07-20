@@ -23,6 +23,7 @@ export const atomNotesFiltered = atom((get) => {
 export const atomNotesSelectedWrite = atom(
   null,
   (get, set, updated: Partial<BaseNote> | null) => {
+    const { editNote } = useDatabase();
     const selectedNote = get(atomNotesSelected);
 
     if (selectedNote && updated) {
@@ -39,6 +40,9 @@ export const atomNotesSelectedWrite = atom(
           note.id === updateNote.id ? updateNote : note,
         ),
       );
+
+      // Update note in database
+      editNote(selectedNote.id, updateNote);
     }
   },
 );
