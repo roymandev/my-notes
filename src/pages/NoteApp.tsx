@@ -16,7 +16,7 @@ const NoteApp = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserNotes(user).then((notes) => {
+      fetchUserNotes().then((notes) => {
         setNotes(notes);
         setLoading(false);
       });
