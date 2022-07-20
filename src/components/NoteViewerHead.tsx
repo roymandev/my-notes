@@ -15,13 +15,13 @@ const NoteViewerHead = () => {
   return (
     <header className="flex items-center p-2">
       <BaseButton
-        className="p-2 sm:hidden"
+        className="p-2 md:hidden"
         onClick={() => setSelectedNote(null)}
       >
         <RiArrowLeftSLine className="h-8 w-8" />
       </BaseButton>
 
-      <p className="flex-1 px-4 text-center text-base sm:text-left sm:text-lg">
+      <p className="flex-1 px-4 text-center text-base md:text-left md:text-lg">
         <span className="text-slate-400">Updated at:</span>{' '}
         {selectedNote && formatDate(selectedNote.updatedAt)}
       </p>
