@@ -18,7 +18,14 @@ const Login = () => {
 
   return (
     <main className="fixed inset-0 overflow-y-auto bg-slate-900 py-20 px-4 text-slate-300">
-      <h1 className="px-4 py-10 text-center text-6xl font-bold">My Notes</h1>
+      <div className="flex items-center justify-center gap-4 px-4">
+        <img
+          src="/android-icon-96x96.png"
+          alt="Logo"
+          className="ml-1 h-20 w-20 shadow"
+        />
+        <h1 className="py-10 text-6xl font-bold">My Notes</h1>
+      </div>
 
       <section className="mx-auto max-w-md space-y-4 rounded bg-slate-800 p-4 shadow">
         <h2 className="p-4 text-center text-2xl font-medium">Login</h2>
