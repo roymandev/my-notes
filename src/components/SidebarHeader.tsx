@@ -9,7 +9,7 @@ const SidebarHeader = () => {
   return (
     <header className="flex items-center p-2">
       <img
-        src="/android-icon-48x48.png"
+        src="/android-icon-96x96.png"
         alt="Logo"
         className="ml-1 h-10 w-10 shadow"
       />
