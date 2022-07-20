@@ -1,19 +1,28 @@
 import BaseButton from '@/components/BaseButton';
 import useAuth from '@/hooks/useAuth';
+import { atomUser } from '@/stores/userStore';
+import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { RiGoogleFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const user = useAtomValue(atomUser);
+  const navigate = useNavigate();
   const { logIn } = useAuth();
   const [authing, setAuthing] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const loginHandler = () => {
-    setAuthing(true);
-    logIn().catch((error) => {
-      setErrorMsg((error as Error).message);
-      setAuthing(false);
-    });
+    if (user) {
+      navigate('/');
+    } else {
+      setAuthing(true);
+      logIn().catch((error) => {
+        setErrorMsg((error as Error).message);
+        setAuthing(false);
+      });
+    }
   };
 
   return (
@@ -42,7 +51,7 @@ const Login = () => {
               disabled={authing}
               onClick={loginHandler}
             >
-              Login with Google
+              {user ? 'Already login, open app' : 'Login with Google'}
             </BaseButton>
           )}
         </form>
