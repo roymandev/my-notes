@@ -9,7 +9,7 @@ const NoteViewerEditor = () => {
   return (
     <div className="flex flex-1 flex-col py-4">
       <AutoResizeTextarea
-        parentClass="text-3xl min-h-[72px] sm:min-h-[100px] font-medium"
+        parentClass="text-3xl min-h-[72px] sm:min-h-[116px] font-medium"
         className="whitespace-pre-wrap break-all bg-transparent p-4 pb-5 outline-none transition-colors placeholder:text-slate-500 sm:p-10"
         placeholder="Title"
         value={selectedNote?.title}
