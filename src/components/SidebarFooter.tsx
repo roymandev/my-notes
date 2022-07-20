@@ -12,12 +12,7 @@ const SidebarFooter = () => {
     <footer className="flex items-center gap-4 p-2">
       {user?.photoURL && <img src={user.photoURL} className="h-10 w-10" />}
       <div>{user?.displayName}</div>
-      <BaseButton
-        className="ml-auto p-3"
-        onClick={() => {
-          if (confirm('Logout ?')) logOut();
-        }}
-      >
+      <BaseButton className="ml-auto p-3" onClick={logOut}>
         <RiLogoutBoxLine className="h-6 w-6" />
       </BaseButton>
     </footer>
