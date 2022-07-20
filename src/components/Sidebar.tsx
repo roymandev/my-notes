@@ -1,5 +1,6 @@
 import NoteList from '@/components/NoteList';
 import NoteSearch from '@/components/NoteSearch';
+import SidebarFooter from '@/components/SidebarFooter';
 import SidebarHeader from '@/components/SidebarHeader';
 import { atomNotesSelected } from '@/stores/notesStore';
 import { useAtomValue } from 'jotai';
@@ -18,6 +19,7 @@ const TheSidebar = () => {
       <SidebarHeader />
       <NoteSearch />
       <NoteList />
+      <SidebarFooter />
     </aside>
   );
 };
