@@ -1,19 +1,22 @@
-# <h1 align="center">React Template</h1>
+<p align="center">
+  <a href="https://my-notes-roymandev.vercel.app/" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="public/My%20Notes.svg" alt="My Notes logo">
+  </a>
+</p>
 
-<p align="center">This is my personal template when i want to create react project.</p>
+# <h1 align="center">My Notes</h1>
 
-## Features
+<p align="center">Just a regular notes app.</p>
+
+## Built with
 
 - Vite
 - React 18
+- Firebase
 - TypeScript
 - React Router
 - Tailwindcss - using Outfit fonts
-- Eslint
-- Prettier
-- Huksy & Lint Staged
-- Absolute Import - import using `@/` preffix
-- Tailwind Merge
+- Jotai
 
 ## Getting Started
 
