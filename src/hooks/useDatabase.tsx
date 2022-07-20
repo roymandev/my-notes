@@ -4,54 +4,49 @@ import { Note } from '@/types/noteTypes';
 import {
   addDoc,
   collection,
+  CollectionReference,
   deleteDoc,
   doc,
   getDocs,
   query,
-  setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { useAtomValue } from 'jotai';
 
 const useDatabase = () => {
-  const notesRef = collection(db, 'notes');
+  const notesRef = collection(db, 'notes') as CollectionReference<Note>;
   const user = useAtomValue(atomUser);
 
+  const whereIsOwner = where('uid', '==', user?.uid || 'NOT_OWNER');
+
   const fetchUserNotes = async () => {
+    const userNotesQuery = query(notesRef, whereIsOwner);
+
+    const userNotesSnap = await getDocs(userNotesQuery);
+
     const result: Note[] = [];
 
-    if (user) {
-      const q = query(notesRef, where('uid', '==', user.uid));
-
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((note) => {
-        result.push({
-          id: note.id,
-          ...note.data(),
-        } as Note);
-      });
-    }
+    userNotesSnap.forEach((note) => {
+      result.push({
+        ...note.data(),
+      } as Note);
+    });
 
     return result;
   };
 
   const addNote = async (newNotes: Omit<Note, 'id'>) => {
-    try {
-      const docRef = await addDoc(notesRef, newNotes);
-
-      return { ...newNotes, id: docRef.id } as Note;
-    } catch (e) {
-      console.error('Error adding document: ', e);
-    }
+    const docRef = await addDoc(notesRef, newNotes);
+    return { ...newNotes, id: docRef.id } as Note;
   };
 
   const deleteNote = async (noteId: string) => {
-    await deleteDoc(doc(db, 'notes', noteId));
+    await deleteDoc(doc(notesRef, noteId));
   };
 
   const editNote = async (noteId: string, update: Note) => {
-    await setDoc(doc(db, 'notes', noteId), update);
+    await updateDoc(doc(notesRef, noteId), update);
   };
 
   return { fetchUserNotes, addNote, deleteNote, editNote };
