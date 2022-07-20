@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import NoteApp from '@/pages/NoteApp';
 import Login from '@/pages/Login';
 import AuthRoute from '@/components/AuthRoute';
-import { firebaseConfig } from '@/../firebase.config';
+import { firebaseConfig } from '@/config/firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
