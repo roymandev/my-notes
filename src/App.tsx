@@ -6,11 +6,8 @@ import { firebaseConfig } from '@/config/firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
-import { useAtom, useSetAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { atomUser } from '@/stores/userStore';
-import { atomNotes } from '@/stores/notesStore';
-import useDatabase from '@/hooks/useDatabase';
-import { useEffect } from 'react';
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -18,18 +15,7 @@ export const auth = getAuth(app);
 export const oAuthProvider = new GoogleAuthProvider();
 
 function App() {
-  const { fetchUserNotes } = useDatabase();
-
-  const [user, setUser] = useAtom(atomUser);
-  const setNotes = useSetAtom(atomNotes);
-
-  useEffect(() => {
-    if (user) {
-      fetchUserNotes(user).then((notes) => {
-        setNotes(notes);
-      });
-    }
-  }, [user]);
+  const setUser = useSetAtom(atomUser);
 
   onAuthStateChanged(auth, (user) => {
     setUser(user);
