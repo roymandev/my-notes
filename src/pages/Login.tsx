@@ -18,13 +18,9 @@ const Login = () => {
 
   return (
     <main className="fixed inset-0 overflow-y-auto bg-slate-900 py-20 px-4 text-slate-300">
-      <div className="flex items-center justify-center gap-4">
-        <img
-          src="/android-icon-144x144.png"
-          alt="Logo"
-          className="h-20 w-20 shadow"
-        />
-        <h1 className="py-10 text-6xl font-bold">My Notes</h1>
+      <div className="flex items-center justify-center gap-4 py-10">
+        <img src="/My%20Notes.svg" alt="Logo" className="h-20 w-20 shadow" />
+        <h1 className="text-6xl font-bold">My Notes</h1>
       </div>
 
       <section className="mx-auto max-w-md space-y-4 rounded bg-slate-800 p-4 shadow">
