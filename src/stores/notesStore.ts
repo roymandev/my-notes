@@ -55,7 +55,7 @@ export const atomNotesDeleteSelected = atom(null, (get, set) => {
       atomNotes,
       get(atomNotes).filter((note) => note.id !== selectedNote.id),
     );
-    set(atomNotesSelected, get(atomNotes)[0] ?? null);
+    set(atomNotesSelected, null);
 
     deleteNote(selectedNote.id);
   }
