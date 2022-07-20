@@ -1,7 +1,15 @@
 import { db } from '@/App';
 import { Note } from '@/types/noteTypes';
 import { User } from 'firebase/auth';
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 
 const useDatabase = () => {
   const notesRef = collection(db, 'notes');
@@ -33,7 +41,11 @@ const useDatabase = () => {
     }
   };
 
-  return { fetchUserNotes, addNote };
+  const deleteNote = async (noteId: string) => {
+    await deleteDoc(doc(db, 'notes', noteId));
+  };
+
+  return { fetchUserNotes, addNote, deleteNote };
 };
 
 export default useDatabase;
