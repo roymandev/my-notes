@@ -7,11 +7,13 @@ import { useEffect } from 'react';
 const PageHome = () => {
   const setSelectedNote = useSetAtom(atomNotesSelected);
 
+  const listenBackButton = () => setSelectedNote((current) => current && null);
+
   useEffect(() => {
-    const listenBackButton = window.addEventListener('popstate', () =>
-      setSelectedNote((current) => current && null),
-    );
-    return listenBackButton;
+    window.addEventListener('popstate', listenBackButton);
+    return () => {
+      window.removeEventListener('popstate', listenBackButton);
+    };
   }, []);
 
   return (
