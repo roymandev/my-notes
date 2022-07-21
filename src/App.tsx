@@ -8,7 +8,6 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { useSetAtom } from 'jotai';
 import { atomUser } from '@/stores/userStore';
-import PageNote from '@/pages/PageNote';
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -32,16 +31,6 @@ function App() {
           </AuthRoute>
         }
       />
-      <Route path="/note">
-        <Route
-          path=":id"
-          element={
-            <AuthRoute>
-              <PageNote />
-            </AuthRoute>
-          }
-        />
-      </Route>
       <Route path="/login" element={<PageLogin />} />
     </Routes>
   );
