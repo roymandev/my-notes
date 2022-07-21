@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { RiGoogleFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const PageLogin = () => {
   const user = useAtomValue(atomUser);
   const navigate = useNavigate();
   const { logIn } = useAuth();
@@ -60,4 +60,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default PageLogin;

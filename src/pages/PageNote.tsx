@@ -5,7 +5,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const Note = () => {
+const PageNote = () => {
   const { id } = useParams();
   const notes = useAtomValue(atomNotes);
   const setSelectedNote = useSetAtom(atomNotesSelected);
@@ -24,4 +24,4 @@ const Note = () => {
   );
 };
 
-export default Note;
+export default PageNote;

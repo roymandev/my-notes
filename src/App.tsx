@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import NoteApp from '@/pages/NoteApp';
-import Login from '@/pages/Login';
+import PageHome from '@/pages/PageHome';
+import PageLogin from '@/pages/PageLogin';
 import AuthRoute from '@/components/AuthRoute';
 import { firebaseConfig } from '@/config/firebase';
 import { initializeApp } from 'firebase/app';
@@ -8,7 +8,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { useSetAtom } from 'jotai';
 import { atomUser } from '@/stores/userStore';
-import Note from '@/pages/Note';
+import PageNote from '@/pages/PageNote';
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -28,7 +28,7 @@ function App() {
         path="/"
         element={
           <AuthRoute fetchNotes>
-            <NoteApp />
+            <PageHome />
           </AuthRoute>
         }
       />
@@ -37,12 +37,12 @@ function App() {
           path=":id"
           element={
             <AuthRoute>
-              <Note />
+              <PageNote />
             </AuthRoute>
           }
         />
       </Route>
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<PageLogin />} />
     </Routes>
   );
 }
