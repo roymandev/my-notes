@@ -27,7 +27,7 @@ function App() {
       <Route
         path="/"
         element={
-          <AuthRoute>
+          <AuthRoute fetchNotes>
             <NoteApp />
           </AuthRoute>
         }
