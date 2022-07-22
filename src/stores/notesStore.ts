@@ -1,4 +1,3 @@
-import useDatabase from '@/hooks/useDatabase';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import { atom } from 'jotai';
@@ -23,7 +22,6 @@ export const atomNotesFiltered = atom((get) => {
 export const atomNotesSelectedWrite = atom(
   null,
   (get, set, updated: Partial<BaseNote> | null) => {
-    const { editNote } = useDatabase();
     const selectedNote = get(atomNotesSelected);
 
     if (selectedNote && updated) {
@@ -40,15 +38,11 @@ export const atomNotesSelectedWrite = atom(
           note.id === updateNote.id ? updateNote : note,
         ),
       );
-
-      // Update note in database
-      editNote(selectedNote.id, updateNote);
     }
   },
 );
 
 export const atomNotesDeleteSelected = atom(null, (get, set) => {
-  const { deleteNote } = useDatabase();
   const selectedNote = get(atomNotesSelected);
   if (selectedNote) {
     set(
@@ -56,14 +50,10 @@ export const atomNotesDeleteSelected = atom(null, (get, set) => {
       get(atomNotes).filter((note) => note.id !== selectedNote.id),
     );
     set(atomNotesSelected, null);
-
-    deleteNote(selectedNote.id);
   }
 });
 
 export const atomNotesAdd = atom(null, (get, set) => {
-  const { addNote } = useDatabase();
-
   const user = get(atomUser);
 
   if (user?.uid) {
@@ -80,19 +70,19 @@ export const atomNotesAdd = atom(null, (get, set) => {
     set(atomNotes, [...get(atomNotes), newLocalNotes]);
     set(atomNotesSelected, newLocalNotes);
 
-    // Add new notes to database and replace local notes id with database id
-    addNote(newNote).then((result) => {
-      if (result) {
-        set(
-          atomNotes,
-          get(atomNotes).map((note) =>
-            note.id === localId ? { ...note, id: result.id } : note,
-          ),
-        );
+    // // Add new notes to database and replace local notes id with database id
+    // addNote(newNote).then((result) => {
+    //   if (result) {
+    //     set(
+    //       atomNotes,
+    //       get(atomNotes).map((note) =>
+    //         note.id === localId ? { ...note, id: result.id } : note,
+    //       ),
+    //     );
 
-        if (get(atomNotesSelected)?.id === localId)
-          set(atomNotesSelected, result);
-      }
-    });
+    //     if (get(atomNotesSelected)?.id === localId)
+    //       set(atomNotesSelected, result);
+    //   }
+    // });
   }
 });
