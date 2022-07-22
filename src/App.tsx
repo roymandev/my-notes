@@ -1,18 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import PageHome from '@/pages/PageHome';
 import PageLogin from '@/pages/PageLogin';
-import AuthRoute from '@/components/AuthRoute';
-import { firebaseConfig } from '@/config/firebase';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth';
-import { useSetAtom } from 'jotai';
+import { auth } from '@/services/firebase';
 import { atomUser } from '@/stores/userStore';
-
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const oAuthProvider = new GoogleAuthProvider();
+import { onAuthStateChanged } from 'firebase/auth';
+import { useSetAtom } from 'jotai';
 
 function App() {
   const setUser = useSetAtom(atomUser);
@@ -23,14 +15,7 @@ function App() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <AuthRoute fetchNotes>
-            <PageHome />
-          </AuthRoute>
-        }
-      />
+      <Route path="/" element={<PageHome />} />
       <Route path="/login" element={<PageLogin />} />
     </Routes>
   );
