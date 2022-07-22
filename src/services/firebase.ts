@@ -1,8 +1,8 @@
 import { firebaseConfig } from '@/config/firebase';
 import { initializeApp } from 'firebase/app';
 import {
+  addDoc,
   collection,
-  CollectionReference,
   getDocs,
   getFirestore,
   query,
@@ -27,7 +27,7 @@ export const login = () => signInWithPopup(auth, oAuthProvider);
 export const logout = () => signOut(auth);
 
 // Firestore
-const notesRef = collection(db, 'notes') as CollectionReference<Note>;
+const notesRef = collection(db, 'notes');
 const whereIsOwner = (user: User) => where('uid', '==', user.uid);
 
 export const getUserNotes = async (user: User) => {
@@ -48,5 +48,20 @@ export const getUserNotes = async (user: User) => {
     return result;
   } catch (error) {
     console.error('Firestore: Error, Failed to get user notes.');
+  }
+};
+
+export const addUserNote = async (note: Omit<Note, 'id'>, user: User) => {
+  try {
+    const docRef = await addDoc(notesRef, {
+      ...note,
+      uid: user.uid,
+    });
+
+    console.info('Firestore: success add user note ' + docRef.id);
+
+    return { ...note, id: docRef.id };
+  } catch (error) {
+    console.error('Firestore: failed add new note');
   }
 };

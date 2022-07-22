@@ -1,9 +1,8 @@
 import BaseButton from '@/components/BaseButton';
-import { atomNotesAdd } from '@/stores/notesStore';
-import { useSetAtom } from 'jotai';
+import useUserNotes from '@/hooks/useUserNotes';
 
 const NoteViewerBlank = () => {
-  const addNote = useSetAtom(atomNotesAdd);
+  const { addNote } = useUserNotes();
 
   return (
     <div className="flex flex-1 flex-col place-items-center justify-center space-y-5 text-center text-3xl">
