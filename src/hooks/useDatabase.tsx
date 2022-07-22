@@ -1,4 +1,4 @@
-import { db } from '@/App';
+import { db } from '@/services/firebase';
 import { atomUser } from '@/stores/userStore';
 import { Note } from '@/types/noteTypes';
 import {
