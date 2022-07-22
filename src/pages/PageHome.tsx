@@ -1,20 +1,13 @@
 import NoteViewer from '@/components/NoteViewer';
 import Sidebar from '@/components/Sidebar';
-import { atomNotesSelected } from '@/stores/notesStore';
-import { useSetAtom } from 'jotai';
-import { useEffect } from 'react';
+import { atomUser } from '@/stores/userStore';
+import { useAtomValue } from 'jotai';
+import { Navigate } from 'react-router-dom';
 
 const PageHome = () => {
-  const setSelectedNote = useSetAtom(atomNotesSelected);
+  const user = useAtomValue(atomUser);
 
-  const listenBackButton = () => setSelectedNote((current) => current && null);
-
-  useEffect(() => {
-    window.addEventListener('popstate', listenBackButton);
-    return () => {
-      window.removeEventListener('popstate', listenBackButton);
-    };
-  }, []);
+  if (!user) return <Navigate to="/login" replace />;
 
   return (
     <main className="fixed inset-0 divide-x divide-slate-700 bg-slate-800 text-lg text-slate-300 md:flex">

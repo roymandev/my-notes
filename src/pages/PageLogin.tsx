@@ -1,29 +1,27 @@
 import BaseButton from '@/components/BaseButton';
-import useAuth from '@/hooks/useAuth';
+import { login } from '@/services/firebase';
 import { atomUser } from '@/stores/userStore';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { RiGoogleFill } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const PageLogin = () => {
   const user = useAtomValue(atomUser);
-  const navigate = useNavigate();
-  const { logIn } = useAuth();
   const [authing, setAuthing] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const loginHandler = () => {
-    if (user) {
-      navigate('/');
-    } else {
-      setAuthing(true);
-      logIn().catch((error) => {
-        setErrorMsg((error as Error).message);
-        setAuthing(false);
-      });
-    }
+    setAuthing(true);
+
+    login().catch((error) => {
+      setAuthing(false);
+      console.log(error.message);
+      setIsError(true);
+    });
   };
+
+  if (user) return <Navigate to="/" replace />;
 
   return (
     <main className="fixed inset-0 overflow-y-auto bg-slate-900 py-20 px-4 text-slate-300">
@@ -36,7 +34,9 @@ const PageLogin = () => {
         <h2 className="p-4 text-center text-2xl font-medium">Login</h2>
 
         <form className="flex flex-col gap-4">
-          {errorMsg && <p className="text-rose-500/80">{errorMsg}</p>}
+          {isError && (
+            <p className="text-rose-500/80">Failed, try again later.</p>
+          )}
 
           {authing ? (
             <div className="flex items-center justify-center gap-4 p-4">
@@ -51,7 +51,7 @@ const PageLogin = () => {
               disabled={authing}
               onClick={loginHandler}
             >
-              {user ? 'Already login, open app' : 'Login with Google'}
+              Login with Google
             </BaseButton>
           )}
         </form>
