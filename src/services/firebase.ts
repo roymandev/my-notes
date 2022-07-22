@@ -43,10 +43,10 @@ export const getUserNotes = async (user: User) => {
       } as Note);
     });
 
-    console.info('Success get user notes');
+    console.info('Firestore: Success get user notes');
 
     return result;
   } catch (error) {
-    console.error('Firebase Error, Failed to get user notes.');
+    console.error('Firestore: Error, Failed to get user notes.');
   }
 };
