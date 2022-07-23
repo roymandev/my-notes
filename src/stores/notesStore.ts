@@ -45,17 +45,6 @@ export const atomNotesSelectedWrite = atom(
   },
 );
 
-export const atomNotesDeleteSelected = atom(null, (get, set) => {
-  const selectedNote = get(atomNotesSelected);
-  if (selectedNote) {
-    set(
-      atomNotes,
-      get(atomNotes).filter((note) => note.id !== selectedNote.id),
-    );
-    set(atomNotesSelected, null);
-  }
-});
-
 export const atomNotesRefAdd = atom(
   null,
   (get, set, newRef: Record<string, string>) => {

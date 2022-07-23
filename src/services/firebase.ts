@@ -3,6 +3,8 @@ import { initializeApp } from 'firebase/app';
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   getFirestore,
   query,
@@ -39,6 +41,7 @@ export const getUserNotes = async (user: User) => {
 
     querySnapshot.forEach((note) => {
       result.push({
+        id: note.id,
         ...note.data(),
       } as Note);
     });
@@ -63,5 +66,17 @@ export const addUserNote = async (note: Omit<Note, 'id'>, user: User) => {
     return { ...note, id: docRef.id };
   } catch (error) {
     console.error('Firestore: failed add new note');
+  }
+};
+
+export const deleteUserNoteById = async (noteId: string) => {
+  try {
+    const docRef = doc(notesRef, noteId);
+
+    await deleteDoc(docRef);
+
+    console.info('Firestore: success delete user note ' + docRef.id);
+  } catch (error) {
+    console.error('Firestore: ' + (error as Error).message);
   }
 };
