@@ -7,6 +7,11 @@ export const atomNotes = atomWithStorage<Note[]>('notes', []);
 export const atomNotesSelected = atom<Note | null>(null);
 export const atomNotesSearch = atom('');
 
+export const atomNotesRef = atomWithStorage<Record<string, string>>(
+  'notesRef',
+  {},
+);
+
 // Actions
 export const atomNotesFiltered = atom((get) => {
   const notes = get(atomNotes);
@@ -50,3 +55,10 @@ export const atomNotesDeleteSelected = atom(null, (get, set) => {
     set(atomNotesSelected, null);
   }
 });
+
+export const atomNotesRefAdd = atom(
+  null,
+  (get, set, newRef: Record<string, string>) => {
+    set(atomNotesRef, (prevRef) => ({ ...prevRef, ...newRef }));
+  },
+);

@@ -1,5 +1,9 @@
 import { addUserNote, getUserNotes } from '@/services/firebase';
-import { atomNotes, atomNotesSelected } from '@/stores/notesStore';
+import {
+  atomNotes,
+  atomNotesRefAdd,
+  atomNotesSelected,
+} from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { nanoid } from 'nanoid';
@@ -7,6 +11,7 @@ import { nanoid } from 'nanoid';
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
+  const addNewNoteRef = useSetAtom(atomNotesRefAdd);
   const setSelectedNotes = useSetAtom(atomNotesSelected);
 
   const fetchNotes = async () => {
@@ -39,18 +44,9 @@ const useUserNotes = () => {
       // add to firestore
       const storedNote = await addUserNote(newNotes, user);
 
-      // Update local note
-      if (storedNote) {
-        setNotes((prevNotes) =>
-          prevNotes.map((note) =>
-            note.id === localId ? { ...note, id: storedNote.id } : note,
-          ),
-        );
+      // add new notesRef
+      if (storedNote) addNewNoteRef({ [localId]: storedNote.id });
 
-        setSelectedNotes((prevNotes) =>
-          prevNotes?.id === localId ? storedNote : prevNotes,
-        );
-      }
       return;
     }
 
