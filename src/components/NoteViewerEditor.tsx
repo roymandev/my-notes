@@ -1,10 +1,11 @@
 import AutoResizeTextarea from '@/components/AutoResizeTextarea';
-import { atomNotesSelected, atomNotesSelectedWrite } from '@/stores/notesStore';
-import { useAtomValue, useSetAtom } from 'jotai';
+import useUserNotes from '@/hooks/useUserNotes';
+import { atomNotesSelected } from '@/stores/notesStore';
+import { useAtomValue } from 'jotai';
 
 const NoteViewerEditor = () => {
   const selectedNote = useAtomValue(atomNotesSelected);
-  const writeSelectedNote = useSetAtom(atomNotesSelectedWrite);
+  const { updateNote } = useUserNotes();
 
   return (
     <div className="flex flex-1 flex-col py-4">
@@ -14,7 +15,11 @@ const NoteViewerEditor = () => {
         placeholder="Title"
         value={selectedNote?.title}
         onChange={(e) =>
-          writeSelectedNote({ title: e.target.value.replaceAll('\n', '') })
+          selectedNote &&
+          updateNote(
+            { title: e.target.value.replaceAll('\n', '') },
+            selectedNote,
+          )
         }
       />
 
@@ -25,7 +30,9 @@ const NoteViewerEditor = () => {
         className="flex-1 resize-none bg-transparent p-4 pb-[70vh] outline-none transition-colors placeholder:text-slate-500 md:p-10"
         spellCheck="false"
         value={selectedNote?.body || ''}
-        onChange={(e) => writeSelectedNote({ body: e.target.value })}
+        onChange={(e) =>
+          selectedNote && updateNote({ body: e.target.value }, selectedNote)
+        }
       />
     </div>
   );

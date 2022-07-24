@@ -1,4 +1,4 @@
-import { BaseNote, Note } from '@/types/noteTypes';
+import { Note } from '@/types/noteTypes';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
@@ -12,7 +12,7 @@ export const atomNotesRef = atomWithStorage<Record<string, string>>(
   {},
 );
 
-// Actions
+// Getter
 export const atomNotesFiltered = atom((get) => {
   const notes = get(atomNotes);
   const search = get(atomNotesSearch).toLocaleLowerCase();
@@ -22,29 +22,7 @@ export const atomNotesFiltered = atom((get) => {
   );
 });
 
-export const atomNotesSelectedWrite = atom(
-  null,
-  (get, set, updated: Partial<BaseNote> | null) => {
-    const selectedNote = get(atomNotesSelected);
-
-    if (selectedNote && updated) {
-      const updateNote = {
-        ...selectedNote,
-        ...updated,
-        updatedAt: new Date().toISOString(),
-      };
-      set(atomNotesSelected, updateNote);
-
-      set(
-        atomNotes,
-        get(atomNotes).map((note) =>
-          note.id === updateNote.id ? updateNote : note,
-        ),
-      );
-    }
-  },
-);
-
+// Actions
 export const atomNotesRefAdd = atom(
   null,
   (get, set, newRef: Record<string, string>) => {

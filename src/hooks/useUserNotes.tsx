@@ -2,6 +2,7 @@ import {
   addUserNote,
   deleteUserNoteById,
   getUserNotes,
+  updateUserNote,
 } from '@/services/firebase';
 import {
   atomNotes,
@@ -10,11 +11,11 @@ import {
   atomNotesSelected,
 } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
-import { Note } from '@/types/noteTypes';
+import { BaseNote, Note } from '@/types/noteTypes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { nanoid } from 'nanoid';
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
@@ -24,6 +25,8 @@ const useUserNotes = () => {
   const getNotesRef = useAtomCallback(
     useCallback((get) => get(atomNotesRef), []),
   );
+  const timeoutRef = useRef<number>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchNotes = async () => {
     if (user) {
@@ -82,7 +85,38 @@ const useUserNotes = () => {
     console.error('Unauthorized!');
   };
 
-  return { fetchNotes, addNote, deleteNote };
+  const updateNote = async (updateNote: Partial<BaseNote>, note: Note) => {
+    if (user && user.uid === note.uid) {
+      // Update local notes
+      const update = {
+        ...note,
+        ...updateNote,
+        updatedAt: new Date().toISOString(),
+      };
+
+      setSelectedNotes((prevNote) =>
+        prevNote?.id === update.id ? update : prevNote,
+      );
+
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => (note.id === update.id ? update : note)),
+      );
+
+      // Update from firestore with delay
+      setIsLoading(true);
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = window.setTimeout(() => {
+        updateUserNote(updateNote, note.id);
+        setIsLoading(false);
+      }, 4000);
+
+      return;
+    }
+
+    console.error('Unauthorized!');
+  };
+
+  return { fetchNotes, addNote, deleteNote, updateNote, isLoading };
 };
 
 export default useUserNotes;
