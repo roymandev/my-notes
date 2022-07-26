@@ -5,7 +5,7 @@ export interface LoadingProps {
   className?: string;
 }
 
-const Loading = ({ className }: LoadingProps) => {
+const FallbackLoading = ({ className }: LoadingProps) => {
   return (
     <div
       className={twMerge(
@@ -18,4 +18,4 @@ const Loading = ({ className }: LoadingProps) => {
   );
 };
 
-export default Loading;
+export default FallbackLoading;
