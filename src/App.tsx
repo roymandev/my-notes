@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
-import PageHome from '@/pages/PageHome';
-import PageLogin from '@/pages/PageLogin';
 import { auth } from '@/services/firebase';
 import { atomUser } from '@/stores/userStore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSetAtom } from 'jotai';
+import { lazy, Suspense } from 'react';
+import Loading from '@/components/Loading';
+
+const PageHome = lazy(() => import('@/pages/PageHome'));
+const PageLogin = lazy(() => import('@/pages/PageLogin'));
 
 function App() {
   const setUser = useSetAtom(atomUser);
@@ -14,10 +17,12 @@ function App() {
   });
 
   return (
-    <Routes>
-      <Route path="/" element={<PageHome />} />
-      <Route path="/login" element={<PageLogin />} />
-    </Routes>
+    <Suspense fallback={<Loading className="fixed inset-0" />}>
+      <Routes>
+        <Route path="/" element={<PageHome />} />
+        <Route path="/login" element={<PageLogin />} />
+      </Routes>
+    </Suspense>
   );
 }
 
