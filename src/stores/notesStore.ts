@@ -4,7 +4,7 @@ import { atomWithStorage } from 'jotai/utils';
 
 // State
 export const atomNotes = atomWithStorage<Note[]>('notes', []);
-export const atomNotesSelected = atom<Note | null>(null);
+export const atomNotesSelectedId = atom<string | null>(null);
 export const atomNotesSearch = atom('');
 
 export const atomNotesRef = atomWithStorage<Record<string, string>>(
@@ -13,6 +13,10 @@ export const atomNotesRef = atomWithStorage<Record<string, string>>(
 );
 
 // Getter
+export const atomNotesSelected = atom((get) =>
+  get(atomNotes).find((note) => note.id === get(atomNotesSelectedId)),
+);
+
 export const atomNotesFiltered = atom((get) => {
   const notes = get(atomNotes);
   const search = get(atomNotesSearch).toLocaleLowerCase();

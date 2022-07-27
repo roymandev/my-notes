@@ -1,5 +1,5 @@
 import BaseButton from '@/components/BaseButton';
-import { atomNotesSelected } from '@/stores/notesStore';
+import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { RiArrowLeftSLine, RiDeleteBin2Line } from 'react-icons/ri';
 import { formatDate } from '@/utils/formatDate';
@@ -7,7 +7,7 @@ import useUserNotes from '@/hooks/useUserNotes';
 
 const NoteViewerHead = () => {
   const selectedNote = useAtomValue(atomNotesSelected);
-  const setSelectedNote = useSetAtom(atomNotesSelected);
+  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
   const { deleteNote } = useUserNotes();
 
   const deleteNoteHandler = () => selectedNote && deleteNote(selectedNote);
@@ -16,7 +16,7 @@ const NoteViewerHead = () => {
     <header className="flex items-center p-2">
       <BaseButton
         className="p-2 md:hidden"
-        onClick={() => setSelectedNote(null)}
+        onClick={() => setSelectedNoteId(null)}
       >
         <RiArrowLeftSLine className="h-8 w-8" />
       </BaseButton>

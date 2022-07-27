@@ -1,12 +1,12 @@
 import NoteListItem from '@/components/NoteListItem';
 import useUserNotes from '@/hooks/useUserNotes';
-import { atomNotesFiltered, atomNotesSelected } from '@/stores/notesStore';
+import { atomNotesFiltered, atomNotesSelectedId } from '@/stores/notesStore';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 
 const NoteList = () => {
   const notes = useAtomValue(atomNotesFiltered);
-  const selectedNotes = useAtomValue(atomNotesSelected);
+  const selectedNoteId = useAtomValue(atomNotesSelectedId);
 
   const { fetchNotes } = useUserNotes();
 
@@ -22,7 +22,7 @@ const NoteList = () => {
         <NoteListItem
           key={note.id}
           note={note}
-          isSelected={note.id === selectedNotes?.id}
+          isSelected={note.id === selectedNoteId}
         />
       ))}
     </ul>

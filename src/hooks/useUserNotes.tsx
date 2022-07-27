@@ -8,7 +8,7 @@ import {
   atomNotes,
   atomNotesRef,
   atomNotesRefAdd,
-  atomNotesSelected,
+  atomNotesSelectedId,
 } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
@@ -21,7 +21,7 @@ const useUserNotes = () => {
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
   const addNewNoteRef = useSetAtom(atomNotesRefAdd);
-  const setSelectedNotes = useSetAtom(atomNotesSelected);
+  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
   const getNotesRef = useAtomCallback(
     useCallback((get) => get(atomNotesRef), []),
   );
@@ -53,7 +53,7 @@ const useUserNotes = () => {
       // Add to local notes
       const localNote = { id: localId, ...newNotes };
       setNotes((prevNotes) => [...prevNotes, localNote]);
-      setSelectedNotes(localNote);
+      setSelectedNoteId(localNote.id);
 
       // add to firestore
       const storedNote = await addUserNote(newNotes, user);
@@ -73,7 +73,7 @@ const useUserNotes = () => {
       setNotes((prevNotes) =>
         prevNotes.filter((note) => note.id !== deleteNote.id),
       );
-      setSelectedNotes(null);
+      setSelectedNoteId(null);
 
       // Delete from firestore
       const noteId = (await getNotesRef())[deleteNote.id] || deleteNote.id;
@@ -93,10 +93,6 @@ const useUserNotes = () => {
         ...updateNote,
         updatedAt: new Date().toISOString(),
       };
-
-      setSelectedNotes((prevNote) =>
-        prevNote?.id === update.id ? update : prevNote,
-      );
 
       setNotes((prevNotes) =>
         prevNotes.map((note) => (note.id === update.id ? update : note)),
