@@ -1,8 +1,8 @@
 import NoteListItem from '@/components/UI/NoteListItem';
+import NoteSearch from '@/components/UI/NoteSearch';
 import { filterNotes } from '@/libs/filterNotes';
 import { Note } from '@/types/noteTypes';
 import { useState } from 'react';
-import NoteSearch from '../NoteSearch';
 
 export interface NoteListProps {
   list: Note[];
