@@ -1,19 +1,18 @@
+import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import NoteMenu from '@/components/NoteMenu';
+import NoteViewer from '@/components/UI/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
-import { atomNotesSelected } from '@/stores/notesStore';
+import { atomIsMobile } from '@/stores/appStore';
+import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
-import { useAtomValue } from 'jotai';
-import { lazy } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { Navigate } from 'react-router-dom';
 
-const NoteViewer = lazy(() => import('@/components/UI/NoteViewer'));
-const FallbackNoSelectedNote = lazy(
-  () => import('@/components/Fallback/FallbackNoSelectedNote'),
-);
-
 const PageHome = () => {
+  const isMobile = useAtomValue(atomIsMobile);
   const user = useAtomValue(atomUser);
   const selectedNote = useAtomValue(atomNotesSelected);
+  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
   const { deleteNote, updateNote, addNote } = useUserNotes();
 
   if (!user) return <Navigate to="/login" replace />;
@@ -27,6 +26,7 @@ const PageHome = () => {
           note={selectedNote}
           onDeleteNote={() => deleteNote(selectedNote)}
           onNoteChange={(updated) => updateNote(updated, selectedNote)}
+          onClosed={isMobile ? () => setSelectedNoteId(null) : undefined}
         />
       ) : (
         <FallbackNoSelectedNote onAddNote={addNote} />
