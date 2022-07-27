@@ -10,7 +10,7 @@ import { Navigate } from 'react-router-dom';
 const PageHome = () => {
   const user = useAtomValue(atomUser);
   const selectedNote = useAtomValue(atomNotesSelected);
-  const { deleteNote, updateNote } = useUserNotes();
+  const { deleteNote, updateNote, addNote } = useUserNotes();
 
   if (!user) return <Navigate to="/login" replace />;
 
@@ -25,7 +25,7 @@ const PageHome = () => {
           onNoteChange={(updated) => updateNote(updated, selectedNote)}
         />
       ) : (
-        <FallbackNoSelectedNote />
+        <FallbackNoSelectedNote onAddNote={addNote} />
       )}
     </main>
   );
