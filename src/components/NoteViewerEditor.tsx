@@ -1,4 +1,4 @@
-import AutoResizeTextarea from '@/components/AutoResizeTextarea';
+import AutoResizeTextarea from '@/components/UI/AutoResizeTextarea';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomNotesSelected } from '@/stores/notesStore';
 import { useAtomValue } from 'jotai';
