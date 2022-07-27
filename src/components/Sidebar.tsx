@@ -1,5 +1,4 @@
 import NoteList from '@/components/NoteList';
-import NoteSearch from '@/components/NoteSearch';
 import SidebarFooter from '@/components/SidebarFooter';
 import SidebarHeader from '@/components/SidebarHeader';
 import { atomNotesSelectedId } from '@/stores/notesStore';
@@ -17,7 +16,6 @@ const TheSidebar = () => {
       )}
     >
       <SidebarHeader />
-      <NoteSearch />
       <NoteList />
       <SidebarFooter />
     </aside>
