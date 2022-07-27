@@ -4,7 +4,7 @@ import { atomUser } from '@/stores/userStore';
 import { useAtomValue } from 'jotai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 
-const SidebarFooter = () => {
+const NoteMenuFooter = () => {
   const user = useAtomValue(atomUser);
 
   return (
@@ -18,4 +18,4 @@ const SidebarFooter = () => {
   );
 };
 
-export default SidebarFooter;
+export default NoteMenuFooter;

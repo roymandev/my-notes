@@ -1,6 +1,6 @@
 import NoteList from '@/components/UI/NoteList';
-import SidebarFooter from '@/components/SidebarFooter';
-import SidebarHeader from '@/components/SidebarHeader';
+import NoteMenuFooter from '@/components/NoteMenuFooter';
+import NoteMenuHeader from '@/components/NoteMenuHeader';
 import { twMerge } from 'tailwind-merge';
 import { useAtom, useAtomValue } from 'jotai';
 import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
@@ -25,13 +25,13 @@ const NoteMenu = () => {
         isMobile && selectedNoteId && '-left-[100vw] md:left-0',
       )}
     >
-      <SidebarHeader />
+      <NoteMenuHeader />
       <NoteList
         list={notes}
         selectedId={selectedNoteId}
         onNoteSelected={setSelectedNoteId}
       />
-      <SidebarFooter />
+      <NoteMenuFooter />
     </aside>
   );
 };

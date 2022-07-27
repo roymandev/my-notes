@@ -2,7 +2,7 @@ import BaseButton from '@/components/UI/BaseButton';
 import useUserNotes from '@/hooks/useUserNotes';
 import { RiAddFill } from 'react-icons/ri';
 
-const SidebarHeader = () => {
+const NoteMenuHeader = () => {
   const { addNote } = useUserNotes();
 
   return (
@@ -17,4 +17,4 @@ const SidebarHeader = () => {
   );
 };
 
-export default SidebarHeader;
+export default NoteMenuHeader;
