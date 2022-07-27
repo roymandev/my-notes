@@ -1,17 +1,14 @@
 import BaseButton from '@/components/UI/BaseButton';
-import { atomNotesSelectedId } from '@/stores/notesStore';
 import { Note } from '@/types/noteTypes';
-import { useSetAtom } from 'jotai';
 import { twMerge } from 'tailwind-merge';
 
 interface NoteListItemProps {
   note: Note;
   isSelected: boolean;
+  onClick: () => void;
 }
 
-const NoteListItem = ({ note, isSelected }: NoteListItemProps) => {
-  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
-
+const NoteListItem = ({ note, isSelected, onClick }: NoteListItemProps) => {
   return (
     <li>
       <BaseButton
@@ -19,7 +16,7 @@ const NoteListItem = ({ note, isSelected }: NoteListItemProps) => {
           'w-full px-4 py-2 text-left break-all',
           isSelected && 'bg-slate-700 text-slate-300',
         )}
-        onClick={() => setSelectedNoteId(note.id)}
+        onClick={onClick}
       >
         {note.title || '(Untitled)'}
       </BaseButton>
