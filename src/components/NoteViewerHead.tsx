@@ -1,4 +1,4 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/UI/BaseButton';
 import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { RiArrowLeftSLine, RiDeleteBin2Line } from 'react-icons/ri';

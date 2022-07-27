@@ -1,4 +1,4 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/UI/BaseButton';
 import { logout } from '@/services/firebase';
 import { atomUser } from '@/stores/userStore';
 import { useAtomValue } from 'jotai';

@@ -1,4 +1,4 @@
-import BaseInput from '@/components/BaseInput';
+import BaseInput from '@/components/UI/BaseInput';
 import { atomNotesSearch } from '@/stores/notesStore';
 import { useAtom } from 'jotai';
 

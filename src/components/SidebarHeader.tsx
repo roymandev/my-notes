@@ -1,4 +1,4 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/UI/BaseButton';
 import useUserNotes from '@/hooks/useUserNotes';
 import { RiAddFill } from 'react-icons/ri';
 

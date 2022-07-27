@@ -1,4 +1,4 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/UI/BaseButton';
 import { atomNotesSelectedId } from '@/stores/notesStore';
 import { Note } from '@/types/noteTypes';
 import { useSetAtom } from 'jotai';

@@ -1,4 +1,4 @@
-import NoteViewerBlank from '@/components/NoteViewerBlank';
+import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import NoteViewerEditor from '@/components/NoteViewerEditor';
 import NoteViewerHead from '@/components/NoteViewerHead';
 import { atomNotesSelectedId } from '@/stores/notesStore';
@@ -15,7 +15,7 @@ const NoteViewer = () => {
           <NoteViewerEditor />
         </>
       ) : (
-        <NoteViewerBlank />
+        <FallbackNoSelectedNote />
       )}
     </section>
   );

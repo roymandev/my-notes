@@ -1,7 +1,7 @@
-import BaseButton from '@/components/BaseButton';
+import BaseButton from '@/components/UI/BaseButton';
 import useUserNotes from '@/hooks/useUserNotes';
 
-const NoteViewerBlank = () => {
+const FallbackNoSelectedNote = () => {
   const { addNote } = useUserNotes();
 
   return (
@@ -14,4 +14,4 @@ const NoteViewerBlank = () => {
   );
 };
 
-export default NoteViewerBlank;
+export default FallbackNoSelectedNote;
