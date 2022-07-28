@@ -15,7 +15,7 @@ import { BaseNote, Note } from '@/types/noteTypes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { nanoid } from 'nanoid';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
@@ -26,7 +26,6 @@ const useUserNotes = () => {
     useCallback((get) => get(atomNotesRef), []),
   );
   const timeoutRef = useRef<number>();
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchNotes = async () => {
     if (user) {
@@ -99,11 +98,9 @@ const useUserNotes = () => {
       );
 
       // Update from firestore with delay
-      setIsLoading(true);
       window.clearTimeout(timeoutRef.current);
       timeoutRef.current = window.setTimeout(() => {
         updateUserNote(updateNote, note.id);
-        setIsLoading(false);
       }, 4000);
 
       return;
@@ -112,7 +109,7 @@ const useUserNotes = () => {
     console.error('Unauthorized!');
   };
 
-  return { fetchNotes, addNote, deleteNote, updateNote, isLoading };
+  return { fetchNotes, addNote, deleteNote, updateNote };
 };
 
 export default useUserNotes;
