@@ -99,8 +99,9 @@ const useUserNotes = () => {
 
       // Update from firestore with delay
       window.clearTimeout(timeoutRef.current);
+      const noteId = (await getNotesRef())[note.id] || note.id;
       timeoutRef.current = window.setTimeout(() => {
-        updateUserNote(updateNote, note.id);
+        updateUserNote(updateNote, noteId);
       }, 4000);
 
       return;
