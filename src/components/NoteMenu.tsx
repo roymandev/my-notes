@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { useAtom, useAtomValue } from 'jotai';
 import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
 import useUserNotes from '@/hooks/useUserNotes';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { atomIsMobile } from '@/stores/appStore';
 
 const NoteMenu = () => {
@@ -13,9 +13,10 @@ const NoteMenu = () => {
   const notes = useAtomValue(atomNotes);
   const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
   const { fetchNotes } = useUserNotes();
+  const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-    fetchNotes();
+    fetchNotes().then(() => setIsFetching(false));
   }, []);
 
   return (
@@ -30,6 +31,7 @@ const NoteMenu = () => {
         list={notes}
         selectedId={selectedNoteId}
         onNoteSelected={setSelectedNoteId}
+        isFetching={isFetching}
       />
       <NoteMenuFooter />
     </aside>
