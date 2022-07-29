@@ -16,7 +16,11 @@ const NoteViewerHead = ({
   return (
     <header className="flex items-center p-2">
       {onReturn && (
-        <BaseButton className="p-2 md:hidden" onClick={onReturn}>
+        <BaseButton
+          className="p-2 md:hidden"
+          onClick={onReturn}
+          aria-label="Return"
+        >
           <RiArrowLeftSLine className="h-8 w-8" />
         </BaseButton>
       )}
@@ -29,6 +33,7 @@ const NoteViewerHead = ({
       <BaseButton
         className="ml-auto p-3 text-rose-500/70 hover:text-rose-500"
         onClick={onDeleteNote}
+        aria-label="Delete Note"
       >
         <RiDeleteBin2Line className="h-6 w-6" />
       </BaseButton>
