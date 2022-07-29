@@ -9,10 +9,10 @@ export interface NoteViewerEditorProps {
 
 const NoteViewerEditor = ({ title, body, onChange }: NoteViewerEditorProps) => {
   return (
-    <div className="flex flex-1 flex-col py-4">
+    <div className="flex flex-1 flex-col py-2">
       <AutoResizeTextarea
-        parentClass="text-3xl min-h-[72px] md:min-h-[116px] font-medium"
-        className="whitespace-pre-wrap break-all bg-transparent p-4 pb-5 outline-none transition-colors placeholder:text-slate-500 md:p-10"
+        parentClass="text-xl min-h-[60px] md:text-3xl md:min-h-[116px] font-medium"
+        className="whitespace-pre-wrap break-all bg-transparent p-4 outline-none transition-colors placeholder:text-slate-500 md:p-10"
         placeholder="Title"
         value={title}
         onChange={(e) =>
@@ -24,7 +24,7 @@ const NoteViewerEditor = ({ title, body, onChange }: NoteViewerEditorProps) => {
 
       <textarea
         placeholder="Content"
-        className="flex-1 resize-none bg-transparent p-4 pb-[70vh] outline-none transition-colors placeholder:text-slate-500 md:p-10"
+        className="flex-1 resize-none bg-transparent p-4 pb-[70vh] text-sm outline-none transition-colors placeholder:text-slate-500 md:p-10 md:text-base"
         spellCheck="false"
         value={body}
         onChange={(e) => onChange({ body: e.target.value })}
