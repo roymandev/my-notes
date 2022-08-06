@@ -8,7 +8,7 @@ import { CgSpinner } from 'react-icons/cg';
 export interface NoteListProps {
   list: Note[];
   selectedId: Note['id'] | null;
-  onNoteSelected: (noteId: Note['id']) => void;
+  onNoteSelected: (noteId: NoteListProps['selectedId']) => void;
   isFetching: boolean;
 }
 
