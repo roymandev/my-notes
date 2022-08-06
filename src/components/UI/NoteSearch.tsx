@@ -1,4 +1,5 @@
 import BaseInput from '@/components/UI/BaseInput';
+import { memo } from 'react';
 
 export interface NoteSearchProps {
   query: string;
@@ -19,4 +20,4 @@ const NoteSearch = ({ query, setQuery }: NoteSearchProps) => {
   );
 };
 
-export default NoteSearch;
+export default memo(NoteSearch);
