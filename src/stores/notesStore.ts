@@ -1,15 +1,11 @@
 import { Note } from '@/types/noteTypes';
 import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
 
 // State
-export const atomNotes = atomWithStorage<Note[]>('notes', []);
+export const atomNotes = atom<Note[]>([]);
 export const atomNotesSelectedId = atom<string | null>(null);
 
-export const atomNotesRef = atomWithStorage<Record<string, string>>(
-  'notesRef',
-  {},
-);
+export const atomNotesRef = atom<Record<string, string>>({});
 
 // Getter
 export const atomNotesSelected = atom((get) =>
