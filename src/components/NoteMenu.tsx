@@ -1,5 +1,5 @@
 import NoteList from '@/components/UI/NoteList';
-import NoteMenuFooter from '@/components/NoteMenuFooter';
+import NoteMenuFooter from '@/components/UI/NoteMenuFooter';
 import NoteMenuHeader from '@/components/NoteMenuHeader';
 import { twMerge } from 'tailwind-merge';
 import { useAtom, useAtomValue } from 'jotai';
@@ -7,8 +7,11 @@ import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
 import useUserNotes from '@/hooks/useUserNotes';
 import { useEffect, useState } from 'react';
 import { atomIsMobile } from '@/stores/appStore';
+import { atomUser } from '@/stores/userStore';
+import { logout } from '@/services/firebase';
 
 const NoteMenu = () => {
+  const user = useAtomValue(atomUser);
   const isMobile = useAtomValue(atomIsMobile);
   const notes = useAtomValue(atomNotes);
   const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
@@ -33,7 +36,7 @@ const NoteMenu = () => {
         onNoteSelected={setSelectedNoteId}
         isFetching={isFetching}
       />
-      <NoteMenuFooter />
+      {user && <NoteMenuFooter user={user} logoutHandler={logout} />}
     </aside>
   );
 };
