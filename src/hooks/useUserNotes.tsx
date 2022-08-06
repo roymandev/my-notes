@@ -39,7 +39,7 @@ const useUserNotes = () => {
     console.error('Unauthorized!');
   };
 
-  const addNote = async () => {
+  const addNote = useCallback(async () => {
     if (user) {
       const localId = nanoid();
       const newNotes = {
@@ -64,7 +64,7 @@ const useUserNotes = () => {
     }
 
     console.error('Unauthorized!');
-  };
+  }, [user]);
 
   const deleteNote = async (deleteNote: Note) => {
     if (user && user.uid === deleteNote.uid) {
