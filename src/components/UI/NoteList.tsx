@@ -36,11 +36,7 @@ const NoteList = ({
             key={note.id}
             note={note}
             isSelected={note.id === selectedId}
-            onClick={() =>
-              note.id === selectedId
-                ? onNoteSelected(null)
-                : onNoteSelected(note.id)
-            }
+            onSelect={onNoteSelected}
           />
         ))}
       </ul>

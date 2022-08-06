@@ -1,14 +1,15 @@
 import BaseButton from '@/components/UI/BaseButton';
 import { Note } from '@/types/noteTypes';
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface NoteListItemProps {
   note: Note;
   isSelected: boolean;
-  onClick: () => void;
+  onSelect: (selectedId: NoteListItemProps['note']['id'] | null) => void;
 }
 
-const NoteListItem = ({ note, isSelected, onClick }: NoteListItemProps) => {
+const NoteListItem = ({ note, isSelected, onSelect }: NoteListItemProps) => {
   return (
     <li>
       <BaseButton
@@ -16,7 +17,7 @@ const NoteListItem = ({ note, isSelected, onClick }: NoteListItemProps) => {
           'w-full px-4 py-2 text-left break-all',
           isSelected && 'bg-slate-700 text-slate-300',
         )}
-        onClick={onClick}
+        onClick={() => (isSelected ? onSelect(null) : onSelect(note.id))}
       >
         {note.title || '(Untitled)'}
       </BaseButton>
@@ -24,4 +25,4 @@ const NoteListItem = ({ note, isSelected, onClick }: NoteListItemProps) => {
   );
 };
 
-export default NoteListItem;
+export default memo(NoteListItem);
