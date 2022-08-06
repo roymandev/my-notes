@@ -5,10 +5,10 @@ import { RiLogoutBoxLine } from 'react-icons/ri';
 
 export interface NoteMenuFooterProps {
   user: User;
-  logoutHandler: () => void;
+  onLogout: () => void;
 }
 
-const NoteMenuFooter = ({ user, logoutHandler }: NoteMenuFooterProps) => {
+const NoteMenuFooter = ({ user, onLogout }: NoteMenuFooterProps) => {
   return (
     <footer className="flex items-center gap-4 p-2">
       {user.photoURL && (
@@ -21,7 +21,7 @@ const NoteMenuFooter = ({ user, logoutHandler }: NoteMenuFooterProps) => {
       <div>{user.displayName}</div>
       <BaseButton
         className="ml-auto p-3"
-        onClick={logoutHandler}
+        onClick={onLogout}
         aria-label="Logout"
       >
         <RiLogoutBoxLine className="h-6 w-6" />

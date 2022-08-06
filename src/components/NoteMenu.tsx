@@ -29,14 +29,14 @@ const NoteMenu = () => {
         isMobile && selectedNoteId && '-left-[100vw] md:left-0',
       )}
     >
-      <NoteMenuHeader addNoteHandler={addNote} />
+      <NoteMenuHeader onAddNote={addNote} />
       <NoteList
         list={notes}
         selectedId={selectedNoteId}
         onNoteSelected={setSelectedNoteId}
         isFetching={isFetching}
       />
-      {user && <NoteMenuFooter user={user} logoutHandler={logout} />}
+      {user && <NoteMenuFooter user={user} onLogout={logout} />}
     </aside>
   );
 };

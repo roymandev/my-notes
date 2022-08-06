@@ -9,7 +9,7 @@ import { Note } from '@/types/noteTypes';
 export interface NoteViewerProps {
   note: Note;
   onDeleteNote: NoteViewerHeadProps['onDeleteNote'];
-  onClosed: NoteViewerHeadProps['onReturn'];
+  onClose: NoteViewerHeadProps['onReturn'];
   onNoteChange: NoteViewerEditorProps['onChange'];
 }
 
@@ -17,14 +17,14 @@ const NoteViewer = ({
   note,
   onDeleteNote,
   onNoteChange,
-  onClosed,
+  onClose,
 }: NoteViewerProps) => {
   return (
     <section className="flex h-full flex-1 flex-col divide-y divide-slate-700">
       <NoteViewerHead
         updatedAt={note.updatedAt}
         onDeleteNote={onDeleteNote}
-        onReturn={onClosed}
+        onReturn={onClose}
       />
       <NoteViewerEditor
         title={note.title}

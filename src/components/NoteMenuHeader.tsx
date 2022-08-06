@@ -3,10 +3,10 @@ import { memo } from 'react';
 import { RiAddFill } from 'react-icons/ri';
 
 export interface NoteMenuHeaderProps {
-  addNoteHandler: () => void;
+  onAddNote: () => void;
 }
 
-const NoteMenuHeader = ({ addNoteHandler }: NoteMenuHeaderProps) => {
+const NoteMenuHeader = ({ onAddNote }: NoteMenuHeaderProps) => {
   return (
     <header className="flex items-center p-2">
       <img src="/My%20Notes.svg" alt="Logo" className="ml-1 h-10 w-10 shadow" />
@@ -14,7 +14,7 @@ const NoteMenuHeader = ({ addNoteHandler }: NoteMenuHeaderProps) => {
 
       <BaseButton
         className="ml-auto p-2"
-        onClick={addNoteHandler}
+        onClick={onAddNote}
         aria-label="Add Note"
       >
         <RiAddFill className="h-8 w-8" />

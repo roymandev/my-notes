@@ -27,9 +27,9 @@ const PageHome = () => {
         {selectedNote ? (
           <NoteViewer
             note={selectedNote}
-            onDeleteNote={() => setModal('delete-note')}
             onNoteChange={(updated) => updateNote(updated, selectedNote)}
-            onClosed={isMobile ? () => setSelectedNoteId(null) : undefined}
+            onDeleteNote={() => setModal('delete-note')}
+            onClose={isMobile ? () => setSelectedNoteId(null) : undefined}
           />
         ) : (
           <FallbackNoSelectedNote onAddNote={addNote} />
