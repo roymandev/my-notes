@@ -5,14 +5,11 @@ import NoteViewer from '@/components/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomIsMobile, atomModal } from '@/stores/appStore';
 import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
-import { atomUser } from '@/stores/userStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useCallback } from 'react';
-import { Navigate } from 'react-router-dom';
 
 const PageHome = () => {
   const isMobile = useAtomValue(atomIsMobile);
-  const user = useAtomValue(atomUser);
   const selectedNote = useAtomValue(atomNotesSelected);
   const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
   const { updateNote, addNote } = useUserNotes();
@@ -22,8 +19,6 @@ const PageHome = () => {
     () => setModal('delete-note'),
     [setModal],
   );
-
-  if (!user) return <Navigate to="/login" replace />;
 
   return (
     <>
