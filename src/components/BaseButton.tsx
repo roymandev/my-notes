@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 
-interface BaseButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface BaseButtonProps
+  extends React.ComponentPropsWithoutRef<'button'> {
   variant?: keyof typeof variantClass;
 }
 
