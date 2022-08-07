@@ -11,23 +11,12 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  User,
-} from 'firebase/auth';
+import { getAuth, User } from 'firebase/auth';
 import { BaseNote, Note } from '@/types/noteTypes';
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-export const oAuthProvider = new GoogleAuthProvider();
-
-// Authentication
-export const login = () => signInWithPopup(auth, oAuthProvider);
-export const logout = () => signOut(auth);
 
 // Firestore
 const notesRef = collection(db, 'notes');

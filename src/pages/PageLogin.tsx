@@ -1,5 +1,5 @@
 import BaseButton from '@/components/BaseButton';
-import { login } from '@/lib/firebase';
+import useAuth from '@/hooks/useAuth';
 import { atomUser } from '@/stores/userStore';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
@@ -8,17 +8,20 @@ import { Navigate } from 'react-router-dom';
 
 const PageLogin = () => {
   const user = useAtomValue(atomUser);
+  const { login } = useAuth();
   const [authing, setAuthing] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const loginHandler = () => {
+  const loginHandler = async () => {
     setAuthing(true);
 
-    login().catch((error) => {
+    try {
+      await login();
+    } catch (e) {
       setAuthing(false);
-      console.log(error.message);
+      console.log(e);
       setIsError(true);
-    });
+    }
   };
 
   if (user) return <Navigate to="/" replace />;

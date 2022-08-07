@@ -8,10 +8,11 @@ import useUserNotes from '@/hooks/useUserNotes';
 import { useEffect, useState } from 'react';
 import { atomIsMobile } from '@/stores/appStore';
 import { atomUser } from '@/stores/userStore';
-import { logout } from '@/lib/firebase';
+import useAuth from '@/hooks/useAuth';
 
 const NoteMenu = () => {
   const user = useAtomValue(atomUser);
+  const { logout } = useAuth();
   const isMobile = useAtomValue(atomIsMobile);
   const notes = useAtomValue(atomNotes);
   const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
