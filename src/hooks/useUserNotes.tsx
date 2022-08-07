@@ -1,31 +1,65 @@
 import {
-  addUserNote,
   deleteUserNoteById,
+  firestore,
   getUserNotes,
   updateUserNote,
 } from '@/lib/firebase';
 import {
   atomNotes,
   atomNotesRef,
-  atomNotesRefAdd,
   atomNotesSelectedId,
 } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
+import { addDoc, collection } from 'firebase/firestore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { nanoid } from 'nanoid';
 import { useCallback, useRef } from 'react';
 
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
-  const addNewNoteRef = useSetAtom(atomNotesRefAdd);
   const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
   const getNotesRef = useAtomCallback(
     useCallback((get) => get(atomNotesRef), []),
   );
   const timeoutRef = useRef<number>();
+
+  const notesRef = collection(firestore, 'notes');
+
+  const addNote = useCallback(async () => {
+    if (!user) {
+      console.error('Unauthorized!');
+      return;
+    }
+
+    try {
+      const newNotes = {
+        title: '',
+        body: '',
+        uid: user.uid,
+        updatedAt: new Date().toISOString(),
+      };
+
+      // add to firestore
+      const noteRef = await addDoc(notesRef, {
+        ...newNotes,
+        uid: user.uid,
+      });
+
+      // add to local notes
+      if (noteRef) {
+        setNotes((prevNotes) => [
+          ...prevNotes,
+          { id: noteRef.id, ...newNotes },
+        ]);
+
+        setSelectedNoteId(noteRef.id);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [user]);
 
   const fetchNotes = async () => {
     if (user) {
@@ -38,33 +72,6 @@ const useUserNotes = () => {
     setNotes([]);
     console.error('Unauthorized!');
   };
-
-  const addNote = useCallback(async () => {
-    if (user) {
-      const localId = nanoid();
-      const newNotes = {
-        title: '',
-        body: '',
-        uid: user.uid,
-        updatedAt: new Date().toISOString(),
-      };
-
-      // Add to local notes
-      const localNote = { id: localId, ...newNotes };
-      setNotes((prevNotes) => [...prevNotes, localNote]);
-      setSelectedNoteId(localNote.id);
-
-      // add to firestore
-      const storedNote = await addUserNote(newNotes, user);
-
-      // add new notesRef
-      if (storedNote) addNewNoteRef({ [localId]: storedNote.id });
-
-      return;
-    }
-
-    console.error('Unauthorized!');
-  }, [user]);
 
   const deleteNote = async (deleteNote: Note) => {
     if (user && user.uid === deleteNote.uid) {

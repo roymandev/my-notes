@@ -1,16 +1,34 @@
 import BaseButton from '@/components/BaseButton';
+import useUserNotes from '@/hooks/useUserNotes';
+import { useState } from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
-export interface FallbackNoSelectedNoteProps {
-  onAddNote: () => void;
-}
+const FallbackNoSelectedNote = () => {
+  const [loading, setLoading] = useState(false);
+  const { addNote } = useUserNotes();
 
-const FallbackNoSelectedNote = ({ onAddNote }: FallbackNoSelectedNoteProps) => {
+  const addNoteHanlder = async () => {
+    setLoading(true);
+    await addNote();
+    setLoading(false);
+  };
+
   return (
     <div className="flex flex-1 flex-col place-items-center justify-center space-y-5 text-center text-3xl">
-      <p>Select notes or</p>
-      <BaseButton variant="primary" className="py-2 px-5" onClick={onAddNote}>
-        Add New Notes
-      </BaseButton>
+      {loading ? (
+        <CgSpinner className="h-20 w-20 animate-spin text-slate-500" />
+      ) : (
+        <>
+          <p>Select notes or</p>
+          <BaseButton
+            variant="primary"
+            className="py-2 px-5"
+            onClick={addNoteHanlder}
+          >
+            Add New Notes
+          </BaseButton>
+        </>
+      )}
     </div>
   );
 };

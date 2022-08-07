@@ -16,7 +16,7 @@ const NoteMenu = () => {
   const isMobile = useAtomValue(atomIsMobile);
   const notes = useAtomValue(atomNotes);
   const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
-  const { fetchNotes, addNote } = useUserNotes();
+  const { fetchNotes } = useUserNotes();
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const NoteMenu = () => {
         isMobile && selectedNoteId && '-left-[100vw] md:left-0',
       )}
     >
-      <NoteMenuHeader onAddNote={addNote} />
+      <NoteMenuHeader />
       <NoteList
         list={notes}
         selectedId={selectedNoteId}

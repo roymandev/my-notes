@@ -12,7 +12,7 @@ const PageHome = () => {
   const isMobile = useAtomValue(atomIsMobile);
   const selectedNote = useAtomValue(atomNotesSelected);
   const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
-  const { updateNote, addNote } = useUserNotes();
+  const { updateNote } = useUserNotes();
   const setModal = useSetAtom(atomModal);
 
   const deleteNoteHandler = useCallback(
@@ -33,7 +33,7 @@ const PageHome = () => {
             onClose={isMobile ? () => setSelectedNoteId(null) : undefined}
           />
         ) : (
-          <FallbackNoSelectedNote onAddNote={addNote} />
+          <FallbackNoSelectedNote />
         )}
       </main>
       <ContainerModal />
