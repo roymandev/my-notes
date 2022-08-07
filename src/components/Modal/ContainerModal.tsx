@@ -1,6 +1,7 @@
+import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomModal, atomModalClose } from '@/stores/appStore';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
 const ModalDeleteNote = lazy(
   () => import('@/components/Modal/ModalDeleteNote'),
@@ -17,7 +18,9 @@ const ContainerModal = () => {
         tabIndex={-1}
         onClick={closeModal}
       >
-        {modal === 'delete-note' && <ModalDeleteNote />}
+        <Suspense fallback={<FallbackLoading />}>
+          {modal === 'delete-note' && <ModalDeleteNote />}
+        </Suspense>
       </div>
     )
   );
