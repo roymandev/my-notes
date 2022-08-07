@@ -14,7 +14,7 @@ const ContainerModal = () => {
   return (
     modal && (
       <div
-        className="fixed inset-0 flex items-center justify-center bg-slate-700/40 text-lg text-slate-300"
+        className="fixed inset-0 flex items-center justify-center bg-slate-700/40 text-lg text-slate-300 backdrop-blur-sm"
         tabIndex={-1}
         onClick={closeModal}
       >
