@@ -8,7 +8,7 @@ import useUserNotes from '@/hooks/useUserNotes';
 import { useEffect, useState } from 'react';
 import { atomIsMobile } from '@/stores/appStore';
 import { atomUser } from '@/stores/userStore';
-import { logout } from '@/libs/firebase';
+import { logout } from '@/lib/firebase';
 
 const NoteMenu = () => {
   const user = useAtomValue(atomUser);

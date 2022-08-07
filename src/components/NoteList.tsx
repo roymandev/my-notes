@@ -1,6 +1,6 @@
 import NoteListItem from '@/components/NoteListItem';
 import NoteSearch from '@/components/NoteSearch';
-import { filterNotes } from '@/libs/filterNotes';
+import { filterNotes } from '@/lib/filterNotes';
 import { Note } from '@/types/noteTypes';
 import { useState } from 'react';
 import { CgSpinner } from 'react-icons/cg';
