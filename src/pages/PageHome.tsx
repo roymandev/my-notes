@@ -1,7 +1,7 @@
 import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import ContainerModal from '@/components/Modal/ContainerModal';
 import NoteMenu from '@/components/NoteMenu';
-import NoteViewer from '@/components/UI/NoteViewer';
+import NoteViewer from '@/components/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomIsMobile, atomModal } from '@/stores/appStore';
 import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';

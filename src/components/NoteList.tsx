@@ -1,5 +1,5 @@
-import NoteListItem from '@/components/UI/NoteListItem';
-import NoteSearch from '@/components/UI/NoteSearch';
+import NoteListItem from '@/components/NoteListItem';
+import NoteSearch from '@/components/NoteSearch';
 import { filterNotes } from '@/libs/filterNotes';
 import { Note } from '@/types/noteTypes';
 import { useState } from 'react';

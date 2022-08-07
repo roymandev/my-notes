@@ -1,4 +1,4 @@
-import BaseButton from '@/components/UI/BaseButton';
+import BaseButton from '@/components/BaseButton';
 
 export interface FallbackNoSelectedNoteProps {
   onAddNote: () => void;

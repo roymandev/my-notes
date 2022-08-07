@@ -1,4 +1,4 @@
-import BaseInput from '@/components/UI/BaseInput';
+import BaseInput from '@/components/BaseInput';
 import { memo } from 'react';
 
 export interface NoteSearchProps {

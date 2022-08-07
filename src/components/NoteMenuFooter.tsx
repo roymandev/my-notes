@@ -1,4 +1,4 @@
-import BaseButton from '@/components/UI/BaseButton';
+import BaseButton from '@/components/BaseButton';
 import { User } from 'firebase/auth';
 import { memo } from 'react';
 import { RiLogoutBoxLine } from 'react-icons/ri';

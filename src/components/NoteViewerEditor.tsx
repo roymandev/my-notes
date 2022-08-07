@@ -1,4 +1,4 @@
-import AutoResizeTextarea from '@/components/UI/AutoResizeTextarea';
+import AutoResizeTextarea from '@/components/AutoResizeTextarea';
 import { Note } from '@/types/noteTypes';
 
 export interface NoteViewerEditorProps {

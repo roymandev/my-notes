@@ -1,5 +1,5 @@
-import NoteList from '@/components/UI/NoteList';
-import NoteMenuFooter from '@/components/UI/NoteMenuFooter';
+import NoteList from '@/components/NoteList';
+import NoteMenuFooter from '@/components/NoteMenuFooter';
 import NoteMenuHeader from '@/components/NoteMenuHeader';
 import { twMerge } from 'tailwind-merge';
 import { useAtom, useAtomValue } from 'jotai';

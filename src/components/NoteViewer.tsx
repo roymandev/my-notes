@@ -1,9 +1,9 @@
 import NoteViewerEditor, {
   NoteViewerEditorProps,
-} from '@/components/UI/NoteViewerEditor';
+} from '@/components/NoteViewerEditor';
 import NoteViewerHead, {
   NoteViewerHeadProps,
-} from '@/components/UI/NoteViewerHead';
+} from '@/components/NoteViewerHead';
 import { Note } from '@/types/noteTypes';
 
 export interface NoteViewerProps {

@@ -1,4 +1,4 @@
-import BaseButton from '@/components/UI/BaseButton';
+import BaseButton from '@/components/BaseButton';
 import { atomModalClose } from '@/stores/appStore';
 import { useSetAtom } from 'jotai';
 import { RiCloseFill } from 'react-icons/ri';

@@ -1,4 +1,4 @@
-import BaseButton from '@/components/UI/BaseButton';
+import BaseButton from '@/components/BaseButton';
 import { RiArrowLeftSLine, RiDeleteBin2Line } from 'react-icons/ri';
 import { formatDate } from '@/utils/formatDate';
 

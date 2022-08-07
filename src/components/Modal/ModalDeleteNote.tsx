@@ -1,5 +1,5 @@
 import BaseModal from '@/components/Modal/BaseModal';
-import BaseButton from '@/components/UI/BaseButton';
+import BaseButton from '@/components/BaseButton';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomModalClose } from '@/stores/appStore';
 import { atomNotesSelected } from '@/stores/notesStore';
