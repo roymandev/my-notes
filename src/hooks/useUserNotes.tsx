@@ -3,7 +3,7 @@ import {
   deleteUserNoteById,
   getUserNotes,
   updateUserNote,
-} from '@/services/firebase';
+} from '@/libs/firebase';
 import {
   atomNotes,
   atomNotesRef,

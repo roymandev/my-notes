@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { auth } from '@/services/firebase';
+import { auth } from '@/libs/firebase';
 import { atomUser } from '@/stores/userStore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useSetAtom } from 'jotai';

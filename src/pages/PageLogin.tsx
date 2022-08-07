@@ -1,5 +1,5 @@
 import BaseButton from '@/components/BaseButton';
-import { login } from '@/services/firebase';
+import { login } from '@/libs/firebase';
 import { atomUser } from '@/stores/userStore';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
