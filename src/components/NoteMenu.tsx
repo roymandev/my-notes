@@ -5,12 +5,8 @@ import { twMerge } from 'tailwind-merge';
 import { useAtomValue } from 'jotai';
 import { atomNotesSelectedId } from '@/stores/notesStore';
 import { atomIsMobile } from '@/stores/appStore';
-import { atomUser } from '@/stores/userStore';
-import useAuth from '@/hooks/useAuth';
 
 const NoteMenu = () => {
-  const user = useAtomValue(atomUser);
-  const { logout } = useAuth();
   const isMobile = useAtomValue(atomIsMobile);
   const selectedNoteId = useAtomValue(atomNotesSelectedId);
 
@@ -23,7 +19,7 @@ const NoteMenu = () => {
     >
       <NoteMenuHeader />
       <NoteList />
-      {user && <NoteMenuFooter user={user} onLogout={logout} />}
+      <NoteMenuFooter />
     </aside>
   );
 };

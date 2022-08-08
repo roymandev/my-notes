@@ -1,14 +1,15 @@
 import BaseButton from '@/components/BaseButton';
-import { User } from 'firebase/auth';
-import { memo } from 'react';
+import useAuth from '@/hooks/useAuth';
+import { atomUser } from '@/stores/userStore';
+import { useAtomValue } from 'jotai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 
-export interface NoteMenuFooterProps {
-  user: User;
-  onLogout: () => void;
-}
+const NoteMenuFooter = () => {
+  const user = useAtomValue(atomUser);
+  const { logout } = useAuth();
 
-const NoteMenuFooter = ({ user, onLogout }: NoteMenuFooterProps) => {
+  if (!user) return null;
+
   return (
     <footer className="flex items-center gap-4 p-2">
       {user.photoURL && (
@@ -19,15 +20,11 @@ const NoteMenuFooter = ({ user, onLogout }: NoteMenuFooterProps) => {
         />
       )}
       <div>{user.displayName}</div>
-      <BaseButton
-        className="ml-auto p-3"
-        onClick={onLogout}
-        aria-label="Logout"
-      >
+      <BaseButton className="ml-auto p-3" onClick={logout} aria-label="Logout">
         <RiLogoutBoxLine className="h-6 w-6" />
       </BaseButton>
     </footer>
   );
 };
 
-export default memo(NoteMenuFooter);
+export default NoteMenuFooter;
