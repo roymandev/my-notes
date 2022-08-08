@@ -1,9 +1,4 @@
-import {
-  deleteUserNoteById,
-  firestore,
-  getUserNotes,
-  updateUserNote,
-} from '@/lib/firebase';
+import { deleteUserNoteById, firestore, updateUserNote } from '@/lib/firebase';
 import {
   atomNotes,
   atomNotesRef,
@@ -11,7 +6,7 @@ import {
 } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback, useRef } from 'react';
@@ -26,6 +21,7 @@ const useUserNotes = () => {
   const timeoutRef = useRef<number>();
 
   const notesRef = collection(firestore, 'notes');
+  const whereIsOwner = where('uid', '==', user?.uid);
 
   const addNote = useCallback(async () => {
     if (!user) {
@@ -62,15 +58,31 @@ const useUserNotes = () => {
   }, [user]);
 
   const fetchNotes = async () => {
-    if (user) {
-      const notes = await getUserNotes(user);
-      notes && setNotes(notes);
+    if (!user) {
+      setNotes([]);
+      setSelectedNoteId(null);
 
+      console.error('Unauthorized!');
       return;
     }
 
-    setNotes([]);
-    console.error('Unauthorized!');
+    try {
+      const q = query(notesRef, whereIsOwner);
+      const querySnapshot = await getDocs(q);
+
+      const notes: Note[] = [];
+
+      querySnapshot.forEach((note) => {
+        notes.push({
+          id: note.id,
+          ...note.data(),
+        } as Note);
+      });
+
+      setNotes(notes);
+    } catch (error) {
+      console.error('Firestore: Error, Failed to get user notes.');
+    }
   };
 
   const deleteNote = async (deleteNote: Note) => {
