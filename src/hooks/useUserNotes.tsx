@@ -53,10 +53,12 @@ const useUserNotes = () => {
 
       // add to local notes
       if (noteRef) {
-        setNotes((prevNotes) => [
-          ...prevNotes,
-          { id: noteRef.id, ...newNotes },
-        ]);
+        setNotes((prevNotes) => {
+          if (prevNotes.some((note) => note.id === noteRef.id)) {
+            return prevNotes;
+          }
+          return [...prevNotes, { id: noteRef.id, ...newNotes }];
+        });
 
         setSelectedNoteId(noteRef.id);
       }
