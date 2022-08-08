@@ -1,4 +1,4 @@
-import { deleteUserNoteById, firestore, updateUserNote } from '@/lib/firebase';
+import { firestore, updateUserNote } from '@/lib/firebase';
 import {
   atomNotes,
   atomNotesRef,
@@ -6,7 +6,15 @@ import {
 } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback, useRef } from 'react';
@@ -86,21 +94,24 @@ const useUserNotes = () => {
   };
 
   const deleteNote = async (deleteNote: Note) => {
-    if (user && user.uid === deleteNote.uid) {
+    if (!user || user.uid !== deleteNote.uid) {
+      console.error('Unauthorized!');
+      return;
+    }
+
+    try {
+      // Delete from firestore
+      const docRef = doc(notesRef, deleteNote.id);
+      await deleteDoc(docRef);
+
       // Delete from local notes
       setNotes((prevNotes) =>
         prevNotes.filter((note) => note.id !== deleteNote.id),
       );
-      setSelectedNoteId(null);
-
-      // Delete from firestore
-      const noteId = (await getNotesRef())[deleteNote.id] || deleteNote.id;
-      deleteUserNoteById(noteId);
-
-      return;
+      // setSelectedNoteId(null);
+    } catch (error) {
+      console.error('Firestore: ' + (error as Error).message);
     }
-
-    console.error('Unauthorized!');
   };
 
   const updateNote = async (updateNote: Partial<BaseNote>, note: Note) => {

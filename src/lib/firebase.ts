@@ -1,12 +1,6 @@
 import { firebaseConfig } from '@/config/firebase';
 import { initializeApp } from 'firebase/app';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getFirestore,
-  updateDoc,
-} from 'firebase/firestore';
+import { collection, doc, getFirestore, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { BaseNote } from '@/types/noteTypes';
 
@@ -16,18 +10,6 @@ export const auth = getAuth(app);
 
 // Firestore
 const notesRef = collection(firestore, 'notes');
-
-export const deleteUserNoteById = async (noteId: string) => {
-  try {
-    const docRef = doc(notesRef, noteId);
-
-    await deleteDoc(docRef);
-
-    console.info('Firestore: success delete user note ' + docRef.id);
-  } catch (error) {
-    console.error('Firestore: ' + (error as Error).message);
-  }
-};
 
 export const updateUserNote = async (
   updateNote: Partial<BaseNote>,
