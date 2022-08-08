@@ -4,11 +4,24 @@ import useUserNotes from '@/hooks/useUserNotes';
 import { atomModalClose } from '@/stores/appStore';
 import { atomNotesSelected } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useState } from 'react';
+import FallbackLoading from '@/components/Fallback/FallbackLoading';
 
 const ModalDeleteNote = () => {
   const closeModal = useSetAtom(atomModalClose);
   const selectedNote = useAtomValue(atomNotesSelected);
   const { deleteNote } = useUserNotes();
+  const [loading, setLoading] = useState(false);
+
+  const deleteHandler = async () => {
+    if (!selectedNote) return;
+
+    setLoading(true);
+    await deleteNote(selectedNote);
+    closeModal();
+  };
+
+  if (loading) return <FallbackLoading />;
 
   return (
     <BaseModal title="Delete note confirmation">
@@ -24,10 +37,7 @@ const ModalDeleteNote = () => {
         <BaseButton
           className="px-3 py-1 text-rose-500"
           variant="primary"
-          onClick={() => {
-            selectedNote && deleteNote(selectedNote);
-            closeModal();
-          }}
+          onClick={deleteHandler}
         >
           Delete
         </BaseButton>

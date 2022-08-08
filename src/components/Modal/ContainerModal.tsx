@@ -1,6 +1,6 @@
 import FallbackLoading from '@/components/Fallback/FallbackLoading';
-import { atomModal, atomModalClose } from '@/stores/appStore';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { atomModal } from '@/stores/appStore';
+import { useAtomValue } from 'jotai';
 import { lazy, Suspense } from 'react';
 
 const ModalDeleteNote = lazy(
@@ -9,15 +9,10 @@ const ModalDeleteNote = lazy(
 
 const ContainerModal = () => {
   const modal = useAtomValue(atomModal);
-  const closeModal = useSetAtom(atomModalClose);
 
   return (
     modal && (
-      <div
-        className="fixed inset-0 flex items-center justify-center bg-slate-700/40 text-lg text-slate-300 backdrop-blur-sm"
-        tabIndex={-1}
-        onClick={closeModal}
-      >
+      <div className="fixed inset-0 flex items-center justify-center bg-slate-700/40 text-lg text-slate-300 backdrop-blur-sm">
         <Suspense fallback={<FallbackLoading />}>
           {modal === 'delete-note' && <ModalDeleteNote />}
         </Suspense>
