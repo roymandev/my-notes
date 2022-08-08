@@ -110,7 +110,7 @@ const useUserNotes = () => {
       setNotes((prevNotes) =>
         prevNotes.filter((note) => note.id !== deleteNote.id),
       );
-      // setSelectedNoteId(null);
+      setSelectedNoteId(null);
     } catch (error) {
       console.error('Firestore: ' + (error as Error).message);
     }
