@@ -1,42 +1,42 @@
 import NoteListItem from '@/components/NoteListItem';
 import NoteSearch from '@/components/NoteSearch';
+import useUserNotes from '@/hooks/useUserNotes';
 import { filterNotes } from '@/lib/filterNotes';
-import { Note } from '@/types/noteTypes';
-import { useState } from 'react';
+import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
+import { useAtom, useAtomValue } from 'jotai';
+import { useEffect, useState } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
-export interface NoteListProps {
-  list: Note[];
-  selectedId: Note['id'] | null;
-  onNoteSelected: (noteId: NoteListProps['selectedId']) => void;
-  isFetching: boolean;
-}
-
-const NoteList = ({
-  list,
-  selectedId,
-  onNoteSelected,
-  isFetching,
-}: NoteListProps) => {
+const NoteList = () => {
+  const notes = useAtomValue(atomNotes);
+  const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
   const [searchQuery, setSearchQuery] = useState('');
+  const { fetchNotes } = useUserNotes();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    fetchNotes().then(() => setLoading(false));
+  }, []);
 
   return (
     <>
       <NoteSearch query={searchQuery} setQuery={setSearchQuery} />
 
-      {isFetching && (
+      {loading && (
         <div className="flex items-center justify-center gap-2 p-1 text-sm text-sky-500">
           <CgSpinner className="h-4 w-4 animate-spin" /> Fetching notes
         </div>
       )}
 
       <ul className="flex flex-1 flex-col gap-1 overflow-y-auto p-1">
-        {filterNotes(list, searchQuery).map((note) => (
+        {filterNotes(notes, searchQuery).map((note) => (
           <NoteListItem
             key={note.id}
             note={note}
-            isSelected={note.id === selectedId}
-            onSelect={onNoteSelected}
+            isSelected={note.id === selectedNoteId}
+            onSelect={setSelectedNoteId}
           />
         ))}
       </ul>

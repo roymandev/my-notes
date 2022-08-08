@@ -2,10 +2,8 @@ import NoteList from '@/components/NoteList';
 import NoteMenuFooter from '@/components/NoteMenuFooter';
 import NoteMenuHeader from '@/components/NoteMenuHeader';
 import { twMerge } from 'tailwind-merge';
-import { useAtom, useAtomValue } from 'jotai';
-import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
-import useUserNotes from '@/hooks/useUserNotes';
-import { useEffect, useState } from 'react';
+import { useAtomValue } from 'jotai';
+import { atomNotesSelectedId } from '@/stores/notesStore';
 import { atomIsMobile } from '@/stores/appStore';
 import { atomUser } from '@/stores/userStore';
 import useAuth from '@/hooks/useAuth';
@@ -14,14 +12,7 @@ const NoteMenu = () => {
   const user = useAtomValue(atomUser);
   const { logout } = useAuth();
   const isMobile = useAtomValue(atomIsMobile);
-  const notes = useAtomValue(atomNotes);
-  const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
-  const { fetchNotes } = useUserNotes();
-  const [isFetching, setIsFetching] = useState(true);
-
-  useEffect(() => {
-    fetchNotes().then(() => setIsFetching(false));
-  }, []);
+  const selectedNoteId = useAtomValue(atomNotesSelectedId);
 
   return (
     <aside
@@ -31,12 +22,7 @@ const NoteMenu = () => {
       )}
     >
       <NoteMenuHeader />
-      <NoteList
-        list={notes}
-        selectedId={selectedNoteId}
-        onNoteSelected={setSelectedNoteId}
-        isFetching={isFetching}
-      />
+      <NoteList />
       {user && <NoteMenuFooter user={user} onLogout={logout} />}
     </aside>
   );
