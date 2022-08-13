@@ -1,9 +1,5 @@
-import { firestore, updateUserNote } from '@/lib/firebase';
-import {
-  atomNotes,
-  atomNotesRef,
-  atomNotesSelectedId,
-} from '@/stores/notesStore';
+import { firestore } from '@/lib/firebase';
+import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import {
@@ -13,20 +9,16 @@ import {
   doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useAtomCallback } from 'jotai/utils';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
   const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
-  const getNotesRef = useAtomCallback(
-    useCallback((get) => get(atomNotesRef), []),
-  );
-  const timeoutRef = useRef<number>();
 
   const notesRef = collection(firestore, 'notes');
   const whereIsOwner = where('uid', '==', user?.uid);
@@ -117,7 +109,12 @@ const useUserNotes = () => {
   };
 
   const updateNote = async (updateNote: Partial<BaseNote>, note: Note) => {
-    if (user && user.uid === note.uid) {
+    if (!user || user.uid !== note.uid) {
+      console.error('Unauthorized!');
+      return;
+    }
+
+    try {
       // Update local notes
       const update = {
         ...note,
@@ -129,18 +126,14 @@ const useUserNotes = () => {
         prevNotes.map((note) => (note.id === update.id ? update : note)),
       );
 
-      // Update from firestore with delay
-      window.clearTimeout(timeoutRef.current);
-      timeoutRef.current = window.setTimeout(async () => {
-        const noteId = (await getNotesRef())[note.id] || note.id;
+      const docRef = doc(notesRef, note.id);
 
-        updateUserNote(updateNote, noteId);
-      }, 4000);
+      await updateDoc(docRef, update);
 
-      return;
+      console.info('Firestore: success updating user note ' + docRef.id);
+    } catch (error) {
+      console.error('Firestore: ' + (error as Error).message);
     }
-
-    console.error('Unauthorized!');
   };
 
   return { fetchNotes, addNote, deleteNote, updateNote };
