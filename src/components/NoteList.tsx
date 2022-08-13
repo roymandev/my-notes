@@ -9,7 +9,7 @@ import { CgSpinner } from 'react-icons/cg';
 
 const NoteList = () => {
   const notes = useAtomValue(atomNotes);
-  const [selectedNoteId, setSelectedNoteId] = useAtom(atomNotesSelectedId);
+  const [selectedNoteId] = useAtom(atomNotesSelectedId);
   const [searchQuery, setSearchQuery] = useState('');
   const { fetchNotes } = useUserNotes();
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,6 @@ const NoteList = () => {
             key={note.id}
             note={note}
             isSelected={note.id === selectedNoteId}
-            onSelect={setSelectedNoteId}
           />
         ))}
       </ul>

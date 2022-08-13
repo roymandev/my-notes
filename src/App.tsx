@@ -4,8 +4,10 @@ import { lazy, Suspense, useEffect } from 'react';
 import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomIsMobile } from './stores/appStore';
 import ProtectedRoutes from '@/components/Auth/ProtectedRoutes';
+import LayoutNote from '@/components/Layout/LayoutNote';
 
-const PageHome = lazy(() => import('@/pages/PageNote'));
+const PageNoteNoSelected = lazy(() => import('@/pages/PageNoteNoSelected'));
+const PageNoteViewer = lazy(() => import('@/pages/PageNoteViewer'));
 const PageLogin = lazy(() => import('@/pages/PageLogin'));
 
 function App() {
@@ -19,7 +21,10 @@ function App() {
     <Suspense fallback={<FallbackLoading className="fixed inset-0" />}>
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/note" element={<PageHome />} />
+          <Route path="/note" element={<LayoutNote />}>
+            <Route path="" element={<PageNoteNoSelected />} />
+            <Route path=":noteId" element={<PageNoteViewer />} />
+          </Route>
         </Route>
 
         <Route path="/login" element={<PageLogin />} />
