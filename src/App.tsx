@@ -5,7 +5,7 @@ import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomIsMobile } from './stores/appStore';
 import ProtectedRoutes from '@/components/Auth/ProtectedRoutes';
 
-const PageHome = lazy(() => import('@/pages/PageHome'));
+const PageHome = lazy(() => import('@/pages/PageNote'));
 const PageLogin = lazy(() => import('@/pages/PageLogin'));
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
     <Suspense fallback={<FallbackLoading className="fixed inset-0" />}>
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/" element={<PageHome />} />
+          <Route path="/note" element={<PageHome />} />
         </Route>
 
         <Route path="/login" element={<PageLogin />} />
