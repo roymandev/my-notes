@@ -1,10 +1,10 @@
 import AutoResizeTextarea from '@/components/AutoResizeTextarea';
-import { Note } from '@/types/noteTypes';
+import { BaseNote } from '@/types/noteTypes';
 
 export interface NoteViewerEditorProps {
   title: string;
   body: string;
-  onChange: (updatedNote: Partial<Note>) => void;
+  onChange: (updatedNote: Partial<BaseNote>) => void;
 }
 
 const NoteViewerEditor = ({ title, body, onChange }: NoteViewerEditorProps) => {

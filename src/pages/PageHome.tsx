@@ -1,7 +1,7 @@
 import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import ContainerModal from '@/components/Modal/ContainerModal';
 import NoteMenu from '@/components/NoteMenu';
-import NoteViewer from '@/components/NoteViewer';
+import NoteViewer, { NoteViewerProps } from '@/components/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomIsMobile, atomModal } from '@/stores/appStore';
 import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
@@ -20,6 +20,8 @@ const PageHome = () => {
     [setModal],
   );
 
+  const updateNoteHandler: NoteViewerProps['onNoteChange'] = (updated) =>
+    selectedNote && updateNote(updated, selectedNote);
   return (
     <>
       <main className="fixed inset-0 divide-x divide-slate-700 bg-slate-800 text-lg text-slate-300 md:flex">
@@ -27,8 +29,8 @@ const PageHome = () => {
 
         {selectedNote ? (
           <NoteViewer
-            note={selectedNote}
-            onNoteChange={(updated) => updateNote(updated, selectedNote)}
+            initialNote={selectedNote}
+            onNoteChange={updateNoteHandler}
             onDeleteNote={deleteNoteHandler}
             onClose={isMobile ? () => setSelectedNoteId(null) : undefined}
           />
