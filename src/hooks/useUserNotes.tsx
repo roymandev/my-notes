@@ -7,6 +7,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -87,6 +88,18 @@ const useUserNotes = () => {
     }
   };
 
+  const getNoteById = async (noteId: string) => {
+    const docRef = doc(notesRef, noteId);
+
+    try {
+      const docSnap = await getDoc(docRef);
+
+      return { id: noteId, ...docSnap.data() } as Note;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const deleteNote = async (deleteNote: Note) => {
     if (!user || user.uid !== deleteNote.uid) {
       console.error('Unauthorized!');
@@ -136,7 +149,7 @@ const useUserNotes = () => {
     }
   };
 
-  return { fetchNotes, addNote, deleteNote, updateNote };
+  return { fetchNotes, getNoteById, addNote, deleteNote, updateNote };
 };
 
 export default useUserNotes;
