@@ -1,35 +1,24 @@
-import NoteViewer, { NoteViewerProps } from '@/components/NoteViewer';
+import FallbackLoading from '@/components/Fallback/FallbackLoading';
+import NoteViewer from '@/components/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
-import { atomIsMobile, atomModal } from '@/stores/appStore';
-import { atomNotesSelected, atomNotesSelectedId } from '@/stores/notesStore';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { useCallback } from 'react';
+import { atomNotesSelectedId } from '@/stores/notesStore';
+import { Note } from '@/types/noteTypes';
+import { useAtomValue } from 'jotai';
+import { useEffect, useState } from 'react';
 
 const PageNoteViewer = () => {
-  const isMobile = useAtomValue(atomIsMobile);
-  const selectedNote = useAtomValue(atomNotesSelected);
-  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
-  const { updateNote } = useUserNotes();
-  const setModal = useSetAtom(atomModal);
+  const selectedNoteId = useAtomValue(atomNotesSelectedId);
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const { getNoteById } = useUserNotes();
 
-  const deleteNoteHandler = useCallback(
-    () => setModal('delete-note'),
-    [setModal],
-  );
+  useEffect(() => {
+    if (selectedNoteId)
+      getNoteById(selectedNoteId).then((note) => note && setSelectedNote(note));
+  }, [selectedNoteId]);
 
-  const updateNoteHandler: NoteViewerProps['onNoteChange'] = (updated) =>
-    selectedNote && updateNote(updated, selectedNote);
+  if (!selectedNote) return <FallbackLoading className="flex-1" />;
 
-  return (
-    selectedNote && (
-      <NoteViewer
-        initialNote={selectedNote}
-        onNoteChange={updateNoteHandler}
-        onDeleteNote={deleteNoteHandler}
-        onClose={isMobile ? () => setSelectedNoteId(null) : undefined}
-      />
-    )
-  );
+  return <NoteViewer note={selectedNote} />;
 };
 
 export default PageNoteViewer;
