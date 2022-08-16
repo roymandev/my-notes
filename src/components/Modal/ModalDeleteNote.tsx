@@ -5,19 +5,19 @@ import { atomModalClose } from '@/stores/appStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import FallbackLoading from '@/components/Fallback/FallbackLoading';
-import { atomNotesOpened } from '@/stores/notesStore';
+import { atomNotesSelected } from '@/stores/notesStore';
 
 const ModalDeleteNote = () => {
   const closeModal = useSetAtom(atomModalClose);
-  const openedNote = useAtomValue(atomNotesOpened);
+  const selectedNote = useAtomValue(atomNotesSelected);
   const { deleteNote } = useUserNotes();
   const [loading, setLoading] = useState(false);
 
   const deleteHandler = async () => {
-    if (!openedNote) return;
+    if (!selectedNote) return;
 
     setLoading(true);
-    await deleteNote(openedNote);
+    await deleteNote(selectedNote);
     closeModal();
   };
 
@@ -27,7 +27,7 @@ const ModalDeleteNote = () => {
     <BaseModal title="Delete note confirmation">
       <div className="p-4">
         <p>
-          Delete &quot;<b>{openedNote?.title || '(Untitled)'}</b>&quot; note?
+          Delete &quot;<b>{selectedNote?.title || '(Untitled)'}</b>&quot; note?
         </p>
       </div>
       <div className="flex justify-end gap-2 p-2">
