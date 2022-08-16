@@ -15,8 +15,11 @@ import {
 } from 'firebase/firestore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useUserNotes = () => {
+  const navigate = useNavigate();
+
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
   const setOpenedNote = useSetAtom(atomNotesOpened);
@@ -54,6 +57,7 @@ const useUserNotes = () => {
         });
 
         setOpenedNote({ id: noteRef.id, ...newNotes });
+        navigate('/note/' + noteRef.id);
       }
     } catch (error) {
       console.error(error);
