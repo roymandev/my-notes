@@ -2,14 +2,14 @@ import NoteListItem from '@/components/NoteListItem';
 import NoteSearch from '@/components/NoteSearch';
 import useUserNotes from '@/hooks/useUserNotes';
 import { filterNotes } from '@/lib/filterNotes';
-import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
-import { useAtom, useAtomValue } from 'jotai';
+import { atomNotes, atomNotesOpened } from '@/stores/notesStore';
+import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
 const NoteList = () => {
   const notes = useAtomValue(atomNotes);
-  const [selectedNoteId] = useAtom(atomNotesSelectedId);
+  const openedNote = useAtomValue(atomNotesOpened);
   const [searchQuery, setSearchQuery] = useState('');
   const { fetchNotes } = useUserNotes();
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ const NoteList = () => {
           <NoteListItem
             key={note.id}
             note={note}
-            isSelected={note.id === selectedNoteId}
+            isSelected={note.id === openedNote?.id}
           />
         ))}
       </ul>

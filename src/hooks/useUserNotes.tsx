@@ -1,5 +1,5 @@
 import { firestore } from '@/lib/firebase';
-import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
+import { atomNotes, atomNotesOpened } from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import {
@@ -19,7 +19,7 @@ import { useCallback } from 'react';
 const useUserNotes = () => {
   const user = useAtomValue(atomUser);
   const setNotes = useSetAtom(atomNotes);
-  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
+  const setOpenedNote = useSetAtom(atomNotesOpened);
 
   const notesRef = collection(firestore, 'notes');
   const whereIsOwner = where('uid', '==', user?.uid);
@@ -53,7 +53,7 @@ const useUserNotes = () => {
           return [...prevNotes, { id: noteRef.id, ...newNotes }];
         });
 
-        setSelectedNoteId(noteRef.id);
+        setOpenedNote({ id: noteRef.id, ...newNotes });
       }
     } catch (error) {
       console.error(error);
@@ -63,7 +63,7 @@ const useUserNotes = () => {
   const fetchNotes = async () => {
     if (!user) {
       setNotes([]);
-      setSelectedNoteId(null);
+      setOpenedNote(null);
 
       console.error('Unauthorized!');
       return;
@@ -115,7 +115,7 @@ const useUserNotes = () => {
       setNotes((prevNotes) =>
         prevNotes.filter((note) => note.id !== deleteNote.id),
       );
-      setSelectedNoteId(null);
+      setOpenedNote(null);
     } catch (error) {
       console.error('Firestore: ' + (error as Error).message);
     }
