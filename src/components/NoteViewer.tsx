@@ -2,10 +2,10 @@ import NoteViewerEditor from '@/components/NoteViewerEditor';
 import NoteViewerHead from '@/components/NoteViewerHead';
 import useUserNotes from '@/hooks/useUserNotes';
 import { atomIsMobile, atomModal } from '@/stores/appStore';
-import { atomNotesSelectedId } from '@/stores/notesStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface NoteViewerProps {
   note: Note;
@@ -15,7 +15,7 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
   const isMobile = useAtomValue(atomIsMobile);
   const [currentNote, setCurrentNote] = useState(note);
   const { updateNote } = useUserNotes();
-  const setNoteSelectedId = useSetAtom(atomNotesSelectedId);
+  const navigate = useNavigate();
   const setModal = useSetAtom(atomModal);
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +42,7 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
       <NoteViewerHead
         updatedAt={currentNote.updatedAt}
         onDeleteNote={deleteNoteHandler}
-        onReturn={isMobile ? () => setNoteSelectedId(null) : undefined}
+        onReturn={isMobile ? () => navigate('/note') : undefined}
         isSaving={loading}
       />
       <NoteViewerEditor
