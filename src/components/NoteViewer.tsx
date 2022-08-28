@@ -1,4 +1,3 @@
-import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import NoteViewerEditor from '@/components/NoteViewerEditor';
 import NoteViewerHead from '@/components/NoteViewerHead';
 import useUserNotes from '@/hooks/useUserNotes';
@@ -39,8 +38,6 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
       setLoading(false);
     }
   };
-
-  if (!note) return <FallbackNoSelectedNote />;
 
   return (
     currentNote && (
