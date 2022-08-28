@@ -14,7 +14,7 @@ const FallbackNoSelectedNote = () => {
   };
 
   return (
-    <div className="flex flex-1 flex-col place-items-center justify-center space-y-5 text-center text-3xl">
+    <div className="flex h-full flex-1 flex-col place-items-center justify-center space-y-5 text-center text-3xl">
       {loading ? (
         <CgSpinner className="h-20 w-20 animate-spin text-slate-500" />
       ) : (
