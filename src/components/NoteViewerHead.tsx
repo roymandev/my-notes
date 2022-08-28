@@ -28,7 +28,7 @@ const NoteViewerHead = ({
         </BaseButton>
       )}
 
-      <p className="flex flex-1 items-center gap-1 px-4 text-center text-base md:text-left md:text-lg">
+      <p className="flex flex-1 flex-col items-center gap-0 px-4 text-center text-base md:flex-row md:gap-1 md:text-left md:text-lg">
         <span className="text-slate-400">Updated at:</span>{' '}
         {formatDate(updatedAt)}
         {isSaving && (
