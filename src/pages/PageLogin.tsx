@@ -24,7 +24,7 @@ const PageLogin = () => {
     }
   };
 
-  if (user) return <Navigate to="/" replace />;
+  if (user) return <Navigate to="/note" replace />;
 
   return (
     <main className="fixed inset-0 overflow-y-auto bg-slate-900 py-20 px-4 text-slate-300">
