@@ -1,3 +1,4 @@
+import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
 import NoteViewerEditor from '@/components/NoteViewerEditor';
 import NoteViewerHead from '@/components/NoteViewerHead';
 import useUserNotes from '@/hooks/useUserNotes';
@@ -8,7 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface NoteViewerProps {
-  note: Note;
+  note: Note | null;
 }
 
 const NoteViewer = ({ note }: NoteViewerProps) => {
@@ -21,7 +22,7 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
 
   useEffect(() => {
     setCurrentNote(note);
-  }, [note.id]);
+  }, [note]);
 
   const deleteNoteHandler = useCallback(
     () => setModal('delete-note'),
@@ -29,15 +30,17 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
   );
 
   const noteChangeHanlder = async (updated: Partial<BaseNote>) => {
-    setLoading(true);
+    if (currentNote) {
+      setLoading(true);
 
-    setCurrentNote({ ...note, ...updated });
-    await updateNote(updated, currentNote);
+      setCurrentNote({ ...currentNote, ...updated });
+      await updateNote(updated, currentNote);
 
-    setLoading(false);
+      setLoading(false);
+    }
   };
 
-  return (
+  return currentNote ? (
     <section className="flex h-full flex-1 flex-col divide-y divide-slate-700">
       <NoteViewerHead
         updatedAt={currentNote.updatedAt}
@@ -51,6 +54,8 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
         onChange={noteChangeHanlder}
       />
     </section>
+  ) : (
+    <FallbackNoSelectedNote />
   );
 };
 
