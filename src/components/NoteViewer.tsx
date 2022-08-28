@@ -40,22 +40,24 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
     }
   };
 
-  return currentNote ? (
-    <section className="flex h-full flex-1 flex-col divide-y divide-slate-700">
-      <NoteViewerHead
-        updatedAt={currentNote.updatedAt}
-        onDeleteNote={deleteNoteHandler}
-        onReturn={isMobile ? () => navigate('/note') : undefined}
-        isSaving={loading}
-      />
-      <NoteViewerEditor
-        title={currentNote.title}
-        body={currentNote.body}
-        onChange={noteChangeHanlder}
-      />
-    </section>
-  ) : (
-    <FallbackNoSelectedNote />
+  if (!note) return <FallbackNoSelectedNote />;
+
+  return (
+    currentNote && (
+      <section className="flex h-full flex-1 flex-col divide-y divide-slate-700">
+        <NoteViewerHead
+          updatedAt={currentNote.updatedAt}
+          onDeleteNote={deleteNoteHandler}
+          onReturn={isMobile ? () => navigate('/note') : undefined}
+          isSaving={loading}
+        />
+        <NoteViewerEditor
+          title={currentNote.title}
+          body={currentNote.body}
+          onChange={noteChangeHanlder}
+        />
+      </section>
+    )
   );
 };
 
