@@ -6,8 +6,10 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomNotesSelected } from '@/stores/notesStore';
+import { useNavigate } from 'react-router-dom';
 
 const ModalDeleteNote = () => {
+  const navigate = useNavigate();
   const closeModal = useSetAtom(atomModalClose);
   const selectedNote = useAtomValue(atomNotesSelected);
   const { deleteNote } = useUserNotes();
@@ -19,6 +21,7 @@ const ModalDeleteNote = () => {
     setLoading(true);
     await deleteNote(selectedNote);
     closeModal();
+    navigate('/note');
   };
 
   if (loading) return <FallbackLoading />;
