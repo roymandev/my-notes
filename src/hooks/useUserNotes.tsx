@@ -1,5 +1,9 @@
 import { firestore } from '@/lib/firebase';
-import { atomNotes, atomNotesSelectedId } from '@/stores/notesStore';
+import {
+  atomNotes,
+  atomNotesSelectedId,
+  atomNotesUpdateNote,
+} from '@/stores/notesStore';
 import { atomUser } from '@/stores/userStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import {
@@ -13,7 +17,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,7 +25,8 @@ const useUserNotes = () => {
   const navigate = useNavigate();
 
   const user = useAtomValue(atomUser);
-  const [notes, setNotes] = useAtom(atomNotes);
+  const setNotes = useSetAtom(atomNotes);
+  const updateLocalNote = useSetAtom(atomNotesUpdateNote);
   const setNoteSelectedId = useSetAtom(atomNotesSelectedId);
 
   const notesRef = collection(firestore, 'notes');
@@ -92,15 +97,12 @@ const useUserNotes = () => {
     }
   };
 
-  const getNoteById = async (noteId: string) => {
-    const note = notes.find((note) => note.id === noteId);
-    if (note) return note;
-
+  const fetchNoteById = async (noteId: string) => {
     try {
       const docRef = doc(notesRef, noteId);
       const docSnap = await getDoc(docRef);
 
-      return { id: noteId, ...docSnap.data() } as Note;
+      updateLocalNote({ id: noteId, ...docSnap.data() } as Note);
     } catch (e) {
       console.error(e);
     }
@@ -155,7 +157,13 @@ const useUserNotes = () => {
     }
   };
 
-  return { fetchNotes, getNoteById, addNote, deleteNote, updateNote };
+  return {
+    fetchNotes,
+    fetchNoteById,
+    addNote,
+    deleteNote,
+    updateNote,
+  };
 };
 
 export default useUserNotes;
