@@ -13,7 +13,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const useUserNotes = () => {
   const navigate = useNavigate();
 
   const user = useAtomValue(atomUser);
-  const setNotes = useSetAtom(atomNotes);
+  const [notes, setNotes] = useAtom(atomNotes);
   const setNoteSelectedId = useSetAtom(atomNotesSelectedId);
 
   const notesRef = collection(firestore, 'notes');
@@ -93,9 +93,11 @@ const useUserNotes = () => {
   };
 
   const getNoteById = async (noteId: string) => {
-    const docRef = doc(notesRef, noteId);
+    const note = notes.find((note) => note.id === noteId);
+    if (note) return note;
 
     try {
+      const docRef = doc(notesRef, noteId);
       const docSnap = await getDoc(docRef);
 
       return { id: noteId, ...docSnap.data() } as Note;
