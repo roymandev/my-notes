@@ -17,7 +17,6 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
   const { updateNote } = useUserNotes();
   const navigate = useNavigate();
   const setModal = useSetAtom(atomModal);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setCurrentNote(note);
@@ -28,14 +27,10 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
     [setModal],
   );
 
-  const noteChangeHanlder = async (updated: Partial<BaseNote>) => {
+  const noteChangeHanlder = (updated: Partial<BaseNote>) => {
     if (currentNote) {
-      setLoading(true);
-
       setCurrentNote({ ...currentNote, ...updated });
-      await updateNote(updated, currentNote);
-
-      setLoading(false);
+      updateNote(updated, currentNote);
     }
   };
 
@@ -46,7 +41,6 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
           updatedAt={currentNote.updatedAt}
           onDeleteNote={deleteNoteHandler}
           onReturn={isMobile ? () => navigate('/note') : undefined}
-          isSaving={loading}
         />
         <NoteViewerEditor
           title={currentNote.title}

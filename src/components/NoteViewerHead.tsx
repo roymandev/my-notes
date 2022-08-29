@@ -1,20 +1,17 @@
 import BaseButton from '@/components/BaseButton';
 import { RiArrowLeftSLine, RiDeleteBin2Line } from 'react-icons/ri';
 import { formatDate } from '@/utils/formatDate';
-import { CgSpinner } from 'react-icons/cg';
 
 export interface NoteViewerHeadProps {
   updatedAt: string;
   onDeleteNote: () => void;
   onReturn?: () => void;
-  isSaving: boolean;
 }
 
 const NoteViewerHead = ({
   updatedAt,
   onDeleteNote,
   onReturn,
-  isSaving,
 }: NoteViewerHeadProps) => {
   return (
     <header className="flex items-center p-2">
@@ -31,11 +28,6 @@ const NoteViewerHead = ({
       <p className="flex flex-1 flex-col items-center gap-0 px-4 text-center text-base md:flex-row md:gap-1 md:text-left md:text-lg">
         <span className="text-slate-400">Updated at:</span>{' '}
         {formatDate(updatedAt)}
-        {isSaving && (
-          <span className="ml-2 flex items-center gap-1 text-emerald-500">
-            <CgSpinner className="animate-spin" /> Saving
-          </span>
-        )}
       </p>
 
       <BaseButton
