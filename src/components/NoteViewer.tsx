@@ -4,7 +4,7 @@ import useUserNotes from '@/hooks/useUserNotes';
 import { atomIsMobile, atomModal } from '@/stores/appStore';
 import { BaseNote, Note } from '@/types/noteTypes';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface NoteViewerProps {
@@ -17,6 +17,7 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
   const { updateNote } = useUserNotes();
   const navigate = useNavigate();
   const setModal = useSetAtom(atomModal);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setCurrentNote(note);
@@ -30,7 +31,13 @@ const NoteViewer = ({ note }: NoteViewerProps) => {
   const noteChangeHanlder = (updated: Partial<BaseNote>) => {
     if (currentNote) {
       setCurrentNote({ ...currentNote, ...updated });
-      updateNote(updated, currentNote);
+
+      if (timeoutRef.current !== null) clearTimeout(timeoutRef.current);
+
+      timeoutRef.current = setTimeout(
+        () => updateNote(updated, currentNote),
+        1000,
+      );
     }
   };
 
