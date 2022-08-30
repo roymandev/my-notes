@@ -12,7 +12,7 @@ import {
 } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PageNote = () => {
   const { noteId } = useParams();
@@ -23,22 +23,28 @@ const PageNote = () => {
   const [loading, setLoading] = useState(true);
   const isMobile = useAtomValue(atomIsMobile);
   const isNotesLoaded = useRef(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSelectedNoteId(noteId || null);
 
-    // Only fetch selectedNote in mobile view
-    if (isMobile && noteId) {
-      if (!notes.find((note) => note.id === noteId)) {
+    (async () => {
+      // Only fetch selectedNote in mobile view
+      if (isMobile && noteId) {
         setLoading(true);
-        fetchNoteById(noteId).finally(() => setLoading(false));
+        if (!notes.find((note) => note.id === noteId)) {
+          await fetchNoteById(noteId);
+        }
+      } else if (!isNotesLoaded.current) {
+        setLoading(true);
+        await fetchNotes().then(() => (isNotesLoaded.current = true));
       }
-    } else if (!isNotesLoaded.current) {
-      setLoading(true);
-      fetchNotes()
-        .then(() => (isNotesLoaded.current = true))
-        .finally(() => setLoading(false));
-    }
+
+      setLoading(false);
+
+      if (!notes.find((note) => note.id === noteId))
+        navigate('/note', { replace: true });
+    })();
   }, [noteId]);
 
   if (loading) return <FallbackLoading className="fixed inset-0 flex-1" />;
