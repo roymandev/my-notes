@@ -25,6 +25,13 @@ const PageNote = () => {
   const isMobile = useAtomValue(atomIsMobile);
   const isNotesLoaded = useRef(false);
   const navigate = useNavigate();
+  const checkIsNoteExist = useAtomCallback(
+    useCallback((get) => {
+      if (noteId && !get(atomNotes).find((note) => note.id === noteId)) {
+        navigate('/note', { replace: true });
+      }
+    }, []),
+  );
 
   useEffect(() => {
     setSelectedNoteId(noteId || null);
@@ -44,12 +51,7 @@ const PageNote = () => {
       setLoading(false);
 
       // Check if selected user notes exist
-      useAtomCallback(
-        useCallback((get) => {
-          if (!get(atomNotes).find((note) => note.id === noteId))
-            navigate('/note', { replace: true });
-        }, []),
-      );
+      checkIsNoteExist();
     })();
   }, [noteId]);
 
