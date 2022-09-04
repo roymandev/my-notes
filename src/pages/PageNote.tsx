@@ -11,7 +11,8 @@ import {
   atomNotesSelectedId,
 } from '@/stores/notesStore';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useEffect, useRef, useState } from 'react';
+import { useAtomCallback } from 'jotai/utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const PageNote = () => {
@@ -42,8 +43,13 @@ const PageNote = () => {
 
       setLoading(false);
 
-      if (!notes.find((note) => note.id === noteId))
-        navigate('/note', { replace: true });
+      // Check if selected user notes exist
+      useAtomCallback(
+        useCallback((get) => {
+          if (!get(atomNotes).find((note) => note.id === noteId))
+            navigate('/note', { replace: true });
+        }, []),
+      );
     })();
   }, [noteId]);
 
