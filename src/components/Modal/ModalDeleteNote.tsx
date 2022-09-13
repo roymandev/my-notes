@@ -4,9 +4,9 @@ import useUserNotes from '@/hooks/useUserNotes';
 import { atomModalClose } from '@/stores/appStore';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
-import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomNotesSelected } from '@/stores/notesStore';
 import { useNavigate } from 'react-router-dom';
+import Loading from '@/components/Fallback/Loading';
 
 const ModalDeleteNote = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const ModalDeleteNote = () => {
     navigate('/note');
   };
 
-  if (loading) return <FallbackLoading />;
+  if (loading) return <Loading />;
 
   return (
     <BaseModal title="Delete note confirmation">

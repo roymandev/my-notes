@@ -1,5 +1,5 @@
-import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import FallbackNoSelectedNote from '@/components/Fallback/FallbackNoSelectedNote';
+import LoadingFullscreen from '@/components/Fallback/LoadingFullscreen';
 import ContainerModal from '@/components/Modal/ContainerModal';
 import NoteMenu from '@/components/NoteMenu';
 import NoteViewer from '@/components/NoteViewer';
@@ -55,7 +55,7 @@ const PageNote = () => {
     })();
   }, [noteId]);
 
-  if (loading) return <FallbackLoading className="fixed inset-0 flex-1" />;
+  if (loading) return <LoadingFullscreen />;
 
   return (
     <main className="fixed inset-0 divide-x divide-slate-700 bg-slate-800 text-lg text-slate-300 md:flex">
