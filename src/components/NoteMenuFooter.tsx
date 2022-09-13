@@ -1,12 +1,12 @@
 import BaseButton from '@/components/BaseButton';
-import useAuth from '@/hooks/useAuth';
+import { auth } from '@/lib/firebase';
 import { atomUser } from '@/stores/userStore';
+import { signOut } from 'firebase/auth';
 import { useAtomValue } from 'jotai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 
 const NoteMenuFooter = () => {
   const user = useAtomValue(atomUser);
-  const { logout } = useAuth();
 
   if (!user) return null;
 
@@ -20,7 +20,11 @@ const NoteMenuFooter = () => {
         />
       )}
       <div>{user.displayName}</div>
-      <BaseButton className="ml-auto p-3" onClick={logout} aria-label="Logout">
+      <BaseButton
+        className="ml-auto p-3"
+        onClick={() => signOut(auth)}
+        aria-label="Logout"
+      >
         <RiLogoutBoxLine className="h-6 w-6" />
       </BaseButton>
     </footer>

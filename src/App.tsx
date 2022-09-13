@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { lazy, Suspense, useEffect } from 'react';
-import FallbackLoading from '@/components/Fallback/FallbackLoading';
 import { atomIsMobile } from './stores/appStore';
-import ProtectedRoutes from '@/components/Auth/ProtectedRoutes';
+import LoadingFullscreen from '@/components/Fallback/LoadingFullscreen';
+
+const AuthRoutes = lazy(() => import('@/components/Auth/AuthRoutes'));
+const ProtectedRoutes = lazy(() => import('@/components/Auth/ProtectedRoutes'));
 
 const PageHome = lazy(() => import('@/pages/PageHome'));
 const PageNote = lazy(() => import('@/pages/PageNote'));
@@ -17,16 +19,18 @@ function App() {
   }, []);
 
   return (
-    <Suspense fallback={<FallbackLoading className="fixed inset-0" />}>
+    <Suspense fallback={<LoadingFullscreen />}>
       <Routes>
         <Route path="/" element={<PageHome />} />
 
-        <Route path="/note" element={<ProtectedRoutes />}>
-          <Route index element={<PageNote />} />
-          <Route path=":noteId" element={<PageNote />} />
-        </Route>
+        <Route element={<AuthRoutes />}>
+          <Route path="/note" element={<ProtectedRoutes />}>
+            <Route index element={<PageNote />} />
+            <Route path=":noteId" element={<PageNote />} />
+          </Route>
 
-        <Route path="/login" element={<PageLogin />} />
+          <Route path="/login" element={<PageLogin />} />
+        </Route>
       </Routes>
     </Suspense>
   );

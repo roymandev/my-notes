@@ -1,4 +1,4 @@
 import { User } from 'firebase/auth';
-import { atomWithStorage } from 'jotai/utils';
+import { atom } from 'jotai';
 
-export const atomUser = atomWithStorage<User | null>('currentUser', null);
+export const atomUser = atom<User | null>(null);

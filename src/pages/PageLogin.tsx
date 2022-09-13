@@ -1,6 +1,7 @@
 import BaseButton from '@/components/BaseButton';
-import useAuth from '@/hooks/useAuth';
+import { auth } from '@/lib/firebase';
 import { atomUser } from '@/stores/userStore';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { RiGoogleFill } from 'react-icons/ri';
@@ -8,7 +9,6 @@ import { Link, Navigate } from 'react-router-dom';
 
 const PageLogin = () => {
   const user = useAtomValue(atomUser);
-  const { login } = useAuth();
   const [authing, setAuthing] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -16,7 +16,7 @@ const PageLogin = () => {
     setAuthing(true);
 
     try {
-      await login();
+      await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (e) {
       setAuthing(false);
       console.log(e);

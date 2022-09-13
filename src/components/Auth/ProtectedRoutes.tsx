@@ -5,7 +5,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 const ProtectedRoutes = () => {
   const user = useAtomValue(atomUser);
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to={'/login'} replace />;
 
   return <Outlet />;
 };
