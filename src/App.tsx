@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { lazy, Suspense, useEffect } from 'react';
 import { atomIsMobile } from './stores/appStore';
@@ -31,6 +31,8 @@ function App() {
 
           <Route path="/login" element={<PageLogin />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );
