@@ -4,54 +4,45 @@ import ContainerModal from '@/components/Modal/ContainerModal';
 import NoteMenu from '@/components/NoteMenu';
 import NoteViewer from '@/components/NoteViewer';
 import useUserNotes from '@/hooks/useUserNotes';
-import { atomIsMobile } from '@/stores/appStore';
 import {
   atomNotes,
   atomNotesSelected,
   atomNotesSelectedId,
 } from '@/stores/notesStore';
+import { Note } from '@/types/noteTypes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const PageNote = () => {
-  const { noteId } = useParams();
-  const notes = useAtomValue(atomNotes);
-  const selectedNote = useAtomValue(atomNotesSelected);
-  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
-  const { fetchNoteById, fetchNotes } = useUserNotes();
-  const [loading, setLoading] = useState(true);
-  const isMobile = useAtomValue(atomIsMobile);
-  const isNotesLoaded = useRef(false);
   const navigate = useNavigate();
-  const checkIsNoteExist = useAtomCallback(
-    useCallback((get) => {
-      if (noteId && !get(atomNotes).find((note) => note.id === noteId)) {
-        navigate('/note', { replace: true });
-      }
-    }, []),
+  const { noteId } = useParams();
+  const setSelectedNoteId = useSetAtom(atomNotesSelectedId);
+  const selectedNote = useAtomValue(atomNotesSelected);
+  const { fetchNotes } = useUserNotes();
+  const [loading, setLoading] = useState(true);
+  const getNoteById = useAtomCallback<Note | null, string>(
+    useCallback(
+      (get, set, arg) => get(atomNotes).find((note) => note.id === arg) || null,
+      [],
+    ),
   );
 
   useEffect(() => {
-    setSelectedNoteId(noteId || null);
-
     (async () => {
-      // Only fetch selectedNote in mobile view
-      if (isMobile && noteId) {
-        setLoading(true);
-        if (!notes.find((note) => note.id === noteId)) {
-          await fetchNoteById(noteId);
-        }
-      } else if (!isNotesLoaded.current) {
-        setLoading(true);
-        await fetchNotes().then(() => (isNotesLoaded.current = true));
+      // Fetch notes once
+      if (loading) {
+        await fetchNotes();
+        setLoading(false);
       }
 
-      setLoading(false);
-
-      // Check if selected user notes exist
-      checkIsNoteExist();
+      if (noteId) {
+        // Check if selected note exist
+        if (getNoteById(noteId)) {
+          setSelectedNoteId(noteId);
+        } else navigate('/note', { replace: true });
+      } else setSelectedNoteId(null);
     })();
   }, [noteId]);
 
@@ -59,9 +50,13 @@ const PageNote = () => {
 
   return (
     <main className="fixed inset-0 divide-x divide-slate-700 bg-slate-800 text-lg text-slate-300 md:flex">
-      {(!isMobile || !noteId) && <NoteMenu />}
+      <NoteMenu />
 
-      {noteId ? <NoteViewer note={selectedNote} /> : <FallbackNoSelectedNote />}
+      {selectedNote ? (
+        <NoteViewer note={selectedNote} />
+      ) : (
+        <FallbackNoSelectedNote />
+      )}
 
       <ContainerModal />
     </main>
