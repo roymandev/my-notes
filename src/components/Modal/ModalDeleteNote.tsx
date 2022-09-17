@@ -24,7 +24,12 @@ const ModalDeleteNote = () => {
     navigate('/note');
   };
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="overflow-hidden rounded-lg">
+        <Loading />
+      </div>
+    );
 
   return (
     <BaseModal title="Delete note confirmation">

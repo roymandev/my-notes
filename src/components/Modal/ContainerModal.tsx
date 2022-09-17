@@ -13,7 +13,13 @@ const ContainerModal = () => {
   return (
     modal && (
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-slate-700/40 text-lg text-slate-300 backdrop-blur-sm">
-        <Suspense fallback={<Loading />}>
+        <Suspense
+          fallback={
+            <div className="overflow-hidden rounded-lg">
+              <Loading />
+            </div>
+          }
+        >
           {modal === 'delete-note' && <ModalDeleteNote />}
         </Suspense>
       </div>
