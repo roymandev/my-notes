@@ -1,7 +1,7 @@
 <br>
 <p align="center">
   <a href="https://my-notes.royman.dev/" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="public/My%20Notes.svg" alt="My Notes logo">
+    <img width="180" src="https://github.com/roymandev/my-notes/raw/main/public/My%20Notes.svg" alt="My Notes logo">
   </a>
 </p>
 
