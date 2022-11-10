@@ -1,8 +1,8 @@
-import Loading from '@/components/Fallback/Loading';
+import Loading, { LoadingProps } from '@/components/Fallback/Loading';
 
-const LoadingFullscreen = () => (
+const LoadingFullscreen = (props: LoadingProps) => (
   <div className="fixed inset-0 flex">
-    <Loading />
+    <Loading {...props} />
   </div>
 );
 

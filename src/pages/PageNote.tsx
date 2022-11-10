@@ -46,7 +46,7 @@ const PageNote = () => {
     })();
   }, [noteId]);
 
-  if (loading) return <LoadingFullscreen />;
+  if (loading) return <LoadingFullscreen text="Fetching note" />;
 
   return (
     <main className="fixed inset-0 divide-x divide-slate-700 bg-slate-800 text-lg text-slate-300 md:flex">

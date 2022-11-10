@@ -19,7 +19,7 @@ const AuthRoutes = () => {
     [],
   );
 
-  if (loading) return <LoadingFullscreen />;
+  if (loading) return <LoadingFullscreen text="Authenticating" />;
 
   return <Outlet />;
 };
