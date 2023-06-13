@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import './globals.css';
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 
@@ -15,7 +16,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body
+        className={clsx(
+          font.className,
+          'bg-nobleBlack-700 text-white text-sm font-semibold',
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
