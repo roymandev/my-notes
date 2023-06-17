@@ -1,5 +1,12 @@
 const plugin = require('tailwindcss/plugin');
 
+const BG_CLIP_TEXT = {
+  'background-clip': 'text',
+  '-webkit-background-clip': 'text',
+  '-webkit-text-fill-color': 'transparent',
+  'text-fill-color': 'transparent',
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -53,19 +60,18 @@ module.exports = {
       addUtilities({
         '.text-green-blue-500': {
           'background-image':
+            'linear-gradient(225deg, #82DBF7 0%, #B6F09C 100%)',
+          ...BG_CLIP_TEXT,
+        },
+        '.text-blue-green-500': {
+          'background-image':
             'linear-gradient(45deg, #82DBF7 0%, #B6F09C 100%)',
-          'background-clip': 'text',
-          '-webkit-background-clip': 'text',
-          '-webkit-text-fill-color': 'transparent',
-          'text-fill-color': 'transparent',
+          ...BG_CLIP_TEXT,
         },
         '.text-dayblue-blue-green-500': {
           'background-image':
             'linear-gradient(45deg, #4D62E5 0%, #87DDEE 45.31%, #B6F09C 100%)',
-          'background-clip': 'text',
-          '-webkit-background-clip': 'text',
-          '-webkit-text-fill-color': 'transparent',
-          'text-fill-color': 'transparent',
+          ...BG_CLIP_TEXT,
         },
       });
 
