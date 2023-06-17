@@ -53,6 +53,17 @@ module.exports = {
         800: '#182364',
         900: '#0C1132',
       },
+      redPower: {
+        100: '#FBECEC',
+        600: '#D0302F',
+        900: '#2F0F0E',
+      },
+    },
+    extend: {
+      backgroundImage: {
+        glass:
+          'linear-gradient(117.58deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0) 100%);',
+      },
     },
   },
   plugins: [
