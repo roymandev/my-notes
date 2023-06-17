@@ -1,5 +1,3 @@
-'use client';
-
 import Button from '@/components/Button';
 import Checkbox from '@/components/Checkbox';
 import CustomLink from '@/components/CustomLink';
@@ -33,7 +31,7 @@ const Form = () => {
         </CustomLink>
       </div>
 
-      <Button variant="primary" className="mt-6">
+      <Button variant="primary" size="large" className="mt-6">
         Log in
       </Button>
     </form>

@@ -25,6 +25,7 @@ const LoginPage = () => {
 
           <Button
             className="mt-16 w-full text-nobleBlack-400"
+            size="large"
             icon={<IconGoogle />}
           >
             Sign in with Google
