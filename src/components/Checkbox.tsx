@@ -1,3 +1,5 @@
+'use client';
+
 import * as RxCheckbox from '@radix-ui/react-checkbox';
 import * as Label from '@radix-ui/react-label';
 
