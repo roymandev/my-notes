@@ -20,7 +20,7 @@ const Background = () => {
           alt=""
           src="/illustration/abstract-1.png"
           fill
-          sizes="100vw"
+          sizes="80vw"
           quality={100}
         />
       )}
