@@ -64,6 +64,32 @@ module.exports = {
         glass:
           'linear-gradient(117.58deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0) 100%);',
       },
+      animation: {
+        fadeIn: 'fadeIn 200ms ease-out',
+        fadeOut: 'fadeOut 200ms ease-in',
+      },
+      keyframes: {
+        fadeIn: {
+          from: {
+            opacity: 0,
+            transform: 'translateY(-10%)',
+          },
+          to: {
+            opacity: 1,
+            transform: 'translateX(0%)',
+          },
+        },
+        fadeOut: {
+          from: {
+            opacity: 1,
+            transform: 'translateX(0%)',
+          },
+          to: {
+            opacity: 0,
+            transform: 'translateY(-10%)',
+          },
+        },
+      },
     },
   },
   plugins: [

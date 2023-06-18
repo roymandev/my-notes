@@ -15,7 +15,7 @@ const DropdownMenu = ({ trigger, children }: Props) => {
       <RxDropdownMenu.Portal>
         <RxDropdownMenu.Content
           align="end"
-          className="flex w-60 flex-col rounded-md bg-nobleBlack-600 p-2"
+          className="flex w-60 flex-col rounded-md bg-nobleBlack-600 p-2 data-[state=closed]:animate-fadeOut data-[state=open]:animate-fadeIn"
         >
           {children}
         </RxDropdownMenu.Content>
@@ -34,7 +34,7 @@ const DropdownMenuItem = ({
         'relative flex cursor-pointer gap-4 rounded-lg bg-transparent px-4 py-[14px] text-sm outline-none',
         'after:pointer-events-none after:absolute after:inset-0 after:rounded-lg',
         'after:transition-opacity after:[border-top:1px_solid_#FFFFFF14]',
-        'after:bg-glass after:opacity-0 hover:after:opacity-100',
+        'after:bg-glass after:opacity-0 hover:after:opacity-100 focus:after:opacity-100',
         className,
       )}
       {...rest}
